@@ -15,9 +15,18 @@ public class Invoice {
     String fax;
 
     String website;
-   @OneToMany
-   @JoinColumn(referencedColumnName = "id")
-    List<Item> itemList;
+
+@OneToOne
+@JoinColumn(name = "Customer_Id", referencedColumnName = "id")
+Customer customer;
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
 
     public Integer getId() {
         return id;
@@ -52,11 +61,5 @@ public class Invoice {
         this.website = website;
     }
 
-    public List<Item> getItemList() {
-        return itemList;
-    }
 
-    public void setItemList(List<Item> itemList) {
-        this.itemList = itemList;
-    }
 }
