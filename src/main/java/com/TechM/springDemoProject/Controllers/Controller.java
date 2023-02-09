@@ -1,17 +1,26 @@
 package com.TechM.springDemoProject.Controllers;
 
 
+import com.TechM.springDemoProject.Models.Market;
 import com.TechM.springDemoProject.Services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 public class Controller {
 
     @Autowired
     CustomerService customerService;
+
+    //creating API
+    @RequestMapping(value = "Market/getAll", method= RequestMethod.GET)
+    public List<Market> getAllMarkets(){
+        List<Market> markets=new ArrayList<>();
+        return markets;
+    }
 
 
 
