@@ -1,5 +1,6 @@
 package com.TechM.springDemoProject.Models;
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 //@Table(name = "Customers")
@@ -11,21 +12,15 @@ public class Customer {
     @Column(name="First_Name")
     private String customerFirstName;
 
-    @Column(name="Second_Name" )
+    @Column(name="Second_Name")
     private String customerSecondName;
 
   //  @Column(name="contact")
     private String contact;
 
-    Invoice invoice;
-
-    public Invoice getInvoice() {
-        return invoice;
-    }
-
-    public void setInvoice(Invoice invoice) {
-        this.invoice = invoice;
-    }
+    @OneToMany
+    @JoinColumn(referencedColumnName = "id")
+    List<Invoice> invoice;
 
     public Integer getId() {
         return id;

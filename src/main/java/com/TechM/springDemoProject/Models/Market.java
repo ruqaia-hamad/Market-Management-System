@@ -10,7 +10,8 @@ public class Market {
     @Column(name="Market_name")
     String name;
 
-
+   @OneToMany
+   @JoinColumn(referencedColumnName = "id")
     List<Customer> customers;
 
     public Integer getId() {
