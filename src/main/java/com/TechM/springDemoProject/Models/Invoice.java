@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-public class Invoice {
+public class Invoice extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,9 +16,9 @@ public class Invoice {
 
     String website;
 
-@OneToOne
-@JoinColumn(name = "Customer_Id", referencedColumnName = "id")
-Customer customer;
+    @OneToOne
+    @JoinColumn(name = "Customer_Id", referencedColumnName = "id")
+    Customer customer;
 
     public Customer getCustomer() {
         return customer;
