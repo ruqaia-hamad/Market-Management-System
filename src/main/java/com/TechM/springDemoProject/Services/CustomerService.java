@@ -66,4 +66,11 @@ public class CustomerService {
         List<CustomerMarketDTO> customers = customerRepository.findCustomerByMarketId(Market_Id);
         return customers;
     }
+
+
+
+    public List<Customer> getAllActiveCustomers() {
+        List<Customer>  customers= customerRepository.findAllActive();
+        return customers;
+    }
 }

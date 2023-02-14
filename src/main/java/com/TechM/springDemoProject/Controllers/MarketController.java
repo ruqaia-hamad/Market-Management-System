@@ -1,5 +1,6 @@
 package com.TechM.springDemoProject.Controllers;
 
+import com.TechM.springDemoProject.Models.Item;
 import com.TechM.springDemoProject.Models.Market;
 import com.TechM.springDemoProject.Services.MarketService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,12 @@ public class MarketController
     public void addMarket() {
         marketService.addMarket();
 
+    }
+
+    @RequestMapping(value = "/getIsActive", method = RequestMethod.GET)
+    public List<Market> getAllActiveMarkets(){
+        List<Market> markets= marketService.getAllMarkets();
+        return markets;
     }
 
 }

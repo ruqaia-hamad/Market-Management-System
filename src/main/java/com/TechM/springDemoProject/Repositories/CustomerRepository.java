@@ -11,9 +11,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface CustomerRepository extends CrudRepository<Customer,Integer> {
+public interface CustomerRepository extends CrudRepository<Customer, Integer> {
 
-    @Query(value="SELECT m FROM Customer m")
+    @Query(value = "SELECT m FROM Customer m")
     List<Customer> getAllCustomers();
 
     @Query(value = "SELECT c FROM Customer c where c.id= :customerID")
@@ -28,18 +28,15 @@ public interface CustomerRepository extends CrudRepository<Customer,Integer> {
     @Query(value = "SELECT c FROM Customer c where c.contact= :contact")
     Customer getCustomerByContact(@Param("contact") String contact);
 
-
     @Query(value = "SELECT c FROM Customer c WHERE c.market.id = :Market_Id")
     List<Customer> findByMarketId(@Param("Market_Id") Integer Market_Id);
 
-
-
-    @Query(value = "SELECT new  com.TechM.springDemoProject.Controllers.CustomerMarketDTO(c.customerFirstName, c.customerSecondName, m.name) " +
-            "FROM Customer c " +
-            "JOIN c.market m " +
-            "WHERE m.id = :Market_Id")
+    @Query(value = "SELECT new  com.TechM.springDemoProject.Controllers.CustomerMarketDTO(c.customerFirstName, c.customerSecondName, m.name) " + "FROM Customer c " + "JOIN c.market m " + "WHERE m.id = :Market_Id")
     List<CustomerMarketDTO> findCustomerByMarketId(@Param("Market_Id") Integer Market_Id);
 
+
+    @Query("SELECT c FROM Customer c WHERE c.isActive = true")
+    List<Customer> findAllActive();
 }
 
 

@@ -1,5 +1,6 @@
 package com.TechM.springDemoProject.Controllers;
 
+import com.TechM.springDemoProject.Models.Invoice;
 import com.TechM.springDemoProject.Models.Item;
 import com.TechM.springDemoProject.Services.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,5 +45,10 @@ public class ItemController {
         itemService.addItem();
     }
 
+    @RequestMapping(value = "/getIsActive", method = RequestMethod.GET)
+    public List<Item> getAllActiveItems() {
+        List<Item> items= itemService.getAllActiveItems();
+        return items;
+    }
 
 }

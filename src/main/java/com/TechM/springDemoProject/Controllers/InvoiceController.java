@@ -1,5 +1,6 @@
 package com.TechM.springDemoProject.Controllers;
 
+import com.TechM.springDemoProject.Models.Customer;
 import com.TechM.springDemoProject.Models.Invoice;
 import com.TechM.springDemoProject.Services.InvoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,4 +51,12 @@ public class InvoiceController {
         invoiceService.addInvoice();
         invoiceService.addInvoice();
     }
+
+    @RequestMapping(value = "/getIsActive", method = RequestMethod.GET)
+    public List<Invoice> getAllActiveInvoices() {
+        List<Invoice> invoces= invoiceService.getAllActiveInvoices();
+        return invoces;
+    }
+
+
 }

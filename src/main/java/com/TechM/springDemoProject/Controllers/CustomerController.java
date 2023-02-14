@@ -57,4 +57,15 @@ public class CustomerController {
         return "Recored delete";
     }
 
+
+
+    @RequestMapping(value = "/getIsActive", method = RequestMethod.GET)
+    public List<Customer> getAllActiveCustomers() {
+        List<Customer> customers= customerService.getAllActiveCustomers();
+        return customers;
+    }
+
 }
+
+
+
