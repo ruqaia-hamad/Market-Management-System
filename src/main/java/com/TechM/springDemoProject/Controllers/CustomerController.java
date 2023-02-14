@@ -58,13 +58,31 @@ public class CustomerController {
     }
 
 
-
     @RequestMapping(value = "/getIsActive", method = RequestMethod.GET)
     public List<Customer> getAllActiveCustomers() {
-        List<Customer> customers= customerService.getAllActiveCustomers();
+        List<Customer> customers = customerService.getAllActiveCustomers();
         return customers;
     }
 
+    @RequestMapping(value = "/getInActive", method = RequestMethod.GET)
+    public List<Customer> getAllInActiveCustomers() {
+        List<Customer> customers = customerService.getAllInActiveCustomers();
+        return customers;
+    }
+
+
+
+    @RequestMapping(value = "/getLatestUpdated", method = RequestMethod.GET)
+    public List<Customer> findTopByOrderByUpdated() {
+        List<Customer> customer = customerService.findTopByOrderByUpdated();
+        return customer;
+    }
+
+
+    @RequestMapping(value = "/delete", method = RequestMethod.GET)
+    public void deleteByIdIsActive(Integer id) {
+      customerService.deleteByIdIsActive(id);
+    }
 }
 
 

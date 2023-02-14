@@ -3,10 +3,12 @@ package com.TechM.springDemoProject.Repositories;
 import com.TechM.springDemoProject.Models.Customer;
 
 import com.TechM.springDemoProject.Controllers.CustomerMarketDTO;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -37,6 +39,27 @@ public interface CustomerRepository extends CrudRepository<Customer, Integer> {
 
     @Query("SELECT c FROM Customer c WHERE c.isActive = true")
     List<Customer> findAllActive();
+
+    @Query("SELECT c FROM Customer c WHERE c.isActive = false")
+    List<Customer> findAllInActive();
+
+
+
+
+
+    @Query("SELECT c FROM Customer c WHERE c.id = (SELECT MAX(c.id) FROM Customer c)")
+
+    Customer findTopByOrderById();
+
+    @Query("SELECT c FROM Customer c ORDER BY c.updatedDate DESC")
+    List<Customer> findTopByOrderByUpdated();
+
+
+    @Query("UPDATE Customer c SET c.isActive = false WHERE c.id = :id")
+    void deleteByIdIsActive(@Param("id") Integer id);
+
+
+
 }
 
 

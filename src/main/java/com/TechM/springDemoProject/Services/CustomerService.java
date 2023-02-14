@@ -68,9 +68,33 @@ public class CustomerService {
     }
 
 
-
     public List<Customer> getAllActiveCustomers() {
-        List<Customer>  customers= customerRepository.findAllActive();
+        List<Customer> customers = customerRepository.findAllActive();
         return customers;
     }
+
+    public List<Customer> getAllInActiveCustomers() {
+        List<Customer> customers = customerRepository.findAllInActive();
+        return customers;
+    }
+
+    public Customer findTopByOrderById() {
+    Customer customer = customerRepository.findTopByOrderById();
+        return customer;
+
+    }
+
+    public List<Customer> findTopByOrderByUpdated() {
+        List<Customer> customer = customerRepository.findTopByOrderByUpdated();
+        return customer;
+    }
+
+
+
+
+    public void deleteByIdIsActive(Integer id) {
+         customerRepository.deleteByIdIsActive(id);
+
+    }
+
 }
