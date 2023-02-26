@@ -70,4 +70,9 @@ public class ItemController {
     public void deleteByItemName(String  name) {
        itemService.deleteByItemName(name);
     }
+
+    @RequestMapping(value = "/deleteAll", method = RequestMethod.GET)
+    public void deleteAll() {
+        itemService.deleteAll();
+    }
 }

@@ -49,4 +49,8 @@ public interface InvoiceRepository extends CrudRepository<Invoice, Integer> {
     @Query("DELETE FROM Invoice i WHERE i.email = :email")
     void deleteByInvoiceEmail(@Param("email") String email);
 
+
+    @Modifying
+    @Query("DELETE FROM Invoice e")
+    void deleteAll();
 }

@@ -67,4 +67,9 @@ public class ItemService {
         itemRepository.deleteByItemName(name);
     }
 
+
+    public void deleteAll(){
+        itemRepository.deleteAll();
+    }
+
 }

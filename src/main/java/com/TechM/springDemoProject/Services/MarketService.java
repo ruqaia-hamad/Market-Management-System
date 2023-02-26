@@ -60,4 +60,10 @@ public class MarketService {
     public void deleteByMarketName(String name){
         marketRepository.deleteByMarketName(name);
     }
+
+
+    public void deleteAll(){
+        marketRepository.deleteAll();
+    }
+
 }

@@ -89,6 +89,13 @@ public class CustomerController {
     public void deleteByCustomerFirstName(String  customerFirstName) {
         customerService.deleteCustomersByFirstName(customerFirstName);
     }
+
+
+    @RequestMapping(value = "/deleteAll", method = RequestMethod.GET)
+    public void deleteAll() {
+        customerService.deleteAll();
+    }
+
 }
 
 

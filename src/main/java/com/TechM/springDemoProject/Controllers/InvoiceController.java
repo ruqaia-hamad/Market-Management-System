@@ -78,4 +78,9 @@ public class InvoiceController {
     public void deleteByInvoiceEmail(String  email) {
    invoiceService.deleteByInvoiceEmail(email);
     }
+
+    @RequestMapping(value = "/deleteAll", method = RequestMethod.GET)
+    public void deleteAll() {
+        invoiceService.deleteAll();
+    }
 }

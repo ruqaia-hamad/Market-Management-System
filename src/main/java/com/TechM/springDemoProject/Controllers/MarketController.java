@@ -66,6 +66,11 @@ public class MarketController
         marketService.deleteByMarketName(name);
     }
 
+    @RequestMapping(value = "/deleteAll", method = RequestMethod.GET)
+    public void deleteAll() {
+        marketService.deleteAll();
+    }
+
 }
 
 

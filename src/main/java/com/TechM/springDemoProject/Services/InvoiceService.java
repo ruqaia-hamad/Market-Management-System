@@ -77,5 +77,9 @@ public class InvoiceService {
         invoiceRepository.deleteByInvoiceEmail(email);
 
     }
+
+    public void deleteAll(){
+        invoiceRepository.deleteAll();
+    }
 }
 

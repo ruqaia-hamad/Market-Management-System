@@ -42,4 +42,8 @@ public interface MarketRepository extends CrudRepository<Market, Integer> {
     @Query("DELETE FROM Market m WHERE m.name = :name")
     void deleteByMarketName(@Param("name") String name);
 
+    @Modifying
+    @Query("DELETE FROM Market m")
+    void deleteAll();
+
 }

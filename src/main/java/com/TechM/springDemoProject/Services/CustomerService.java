@@ -102,4 +102,7 @@ public class CustomerService {
         customerRepository.deleteByCustomerFirstName(customerFirstName);
     }
 
+    public void deleteAll(){
+        customerRepository.deleteAll();
+    }
 }

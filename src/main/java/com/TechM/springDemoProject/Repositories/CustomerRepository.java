@@ -65,6 +65,10 @@ public interface CustomerRepository extends CrudRepository<Customer, Integer> {
     @Query("DELETE FROM Customer c WHERE c.customerFirstName = :customerFirstName")
     void deleteByCustomerFirstName(@Param("customerFirstName") String customerFirstName);
 
+
+    @Modifying
+    @Query("DELETE FROM Customer e")
+    void deleteAll();
 }
 
 

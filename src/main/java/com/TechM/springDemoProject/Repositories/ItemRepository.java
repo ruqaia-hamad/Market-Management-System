@@ -48,4 +48,8 @@ public interface ItemRepository extends CrudRepository<Item, Integer> {
     @Query("DELETE FROM Item i WHERE i.name = :name")
     void deleteByItemName(@Param("name") String name);
 
+    @Modifying
+    @Query("DELETE FROM Item i")
+    void deleteAll();
+
 }
