@@ -51,8 +51,31 @@ public class InvoiceService {
 
 
     public List<Invoice> getAllActiveInvoices() {
-        List<Invoice>  invoices= invoiceRepository.findAllActive();
+        List<Invoice> invoices = invoiceRepository.findAllActive();
         return invoices;
+    }
+
+
+    public List<Invoice> getAllInActiveInvoices() {
+        List<Invoice> invoices = invoiceRepository.findAllInActive();
+        return invoices;
+    }
+
+    public Invoice findTopByOrderById() {
+        Invoice invoice = invoiceRepository.findTopByOrderById();
+        return invoice;
+
+    }
+
+
+    public void deleteByIdIsActive(Integer id) {
+        invoiceRepository.deleteByIdIsActive(id);
+
+    }
+
+    public void deleteByInvoiceEmail(String email) {
+        invoiceRepository.deleteByInvoiceEmail(email);
+
     }
 }
 

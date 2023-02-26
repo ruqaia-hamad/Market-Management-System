@@ -54,11 +54,16 @@ public interface CustomerRepository extends CrudRepository<Customer, Integer> {
     @Query("SELECT c FROM Customer c ORDER BY c.updatedDate DESC")
     List<Customer> findTopByOrderByUpdated();
 
-
-    @Query("UPDATE Customer c SET c.isActive = false WHERE c.id = :id")
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM Customer c WHERE c.id = :id")
     void deleteByIdIsActive(@Param("id") Integer id);
 
 
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM Customer c WHERE c.customerFirstName = :customerFirstName")
+    void deleteByCustomerFirstName(@Param("customerFirstName") String customerFirstName);
 
 }
 

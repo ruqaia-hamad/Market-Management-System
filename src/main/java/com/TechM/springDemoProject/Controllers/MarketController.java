@@ -46,6 +46,26 @@ public class MarketController
         return markets;
     }
 
+    @RequestMapping(value = "/getInActive", method = RequestMethod.GET)
+    public List<Market> getAllInActiveMarkets(){
+        List<Market> markets= marketService.getAllInActiveMarkets();
+        return markets;
+    }
+
+    @RequestMapping(value = "/getLatestRow", method = RequestMethod.GET)
+    public Market findTopByOrderById() {
+        Market market = marketService.findTopByOrderById();
+        return market;
+    }
+    @RequestMapping(value = "/deleteById", method = RequestMethod.GET)
+    public void deleteByIdIsActive(Integer id) {
+        marketService.deleteByIdIsActive(id);
+    }
+    @RequestMapping(value = "/deleteByname", method = RequestMethod.GET)
+    public void deleteByMarketName(String  name) {
+        marketService.deleteByMarketName(name);
+    }
+
 }
 
 

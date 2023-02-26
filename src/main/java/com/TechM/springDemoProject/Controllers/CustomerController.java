@@ -83,6 +83,12 @@ public class CustomerController {
     public void deleteByIdIsActive(Integer id) {
       customerService.deleteByIdIsActive(id);
     }
+
+
+    @RequestMapping(value = "/deleteByFirstName", method = RequestMethod.GET)
+    public void deleteByCustomerFirstName(String  customerFirstName) {
+        customerService.deleteCustomersByFirstName(customerFirstName);
+    }
 }
 
 

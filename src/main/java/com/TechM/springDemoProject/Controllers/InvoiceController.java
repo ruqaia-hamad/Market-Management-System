@@ -58,5 +58,24 @@ public class InvoiceController {
         return invoces;
     }
 
+    @RequestMapping(value = "/getInActive", method = RequestMethod.GET)
+    public List<Invoice> getAllInActiveInvoices() {
+        List<Invoice> invoces= invoiceService.getAllInActiveInvoices();
+        return invoces;
+    }
 
+    @RequestMapping(value = "/getLatestRow", method = RequestMethod.GET)
+    public Invoice findTopByOrderById() {
+        Invoice invoice = invoiceService.findTopByOrderById();
+        return invoice;
+    }
+
+    @RequestMapping(value = "/deleteById", method = RequestMethod.GET)
+    public void deleteByIdIsActive(Integer id) {
+        invoiceService.deleteByIdIsActive(id);
+    }
+    @RequestMapping(value = "/deleteByEmail", method = RequestMethod.GET)
+    public void deleteByInvoiceEmail(String  email) {
+   invoiceService.deleteByInvoiceEmail(email);
+    }
 }

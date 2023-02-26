@@ -51,4 +51,23 @@ public class ItemController {
         return items;
     }
 
+    @RequestMapping(value = "/getInActive", method = RequestMethod.GET)
+    public List<Item> getAllInActiveItems() {
+        List<Item> items= itemService.getAllInActiveItems();
+        return items;
+    }
+
+    @RequestMapping(value = "/getLatestRow", method = RequestMethod.GET)
+    public Item findTopByOrderById() {
+        Item item = itemService.findTopByOrderById();
+        return item;
+    }
+    @RequestMapping(value = "/deleteById", method = RequestMethod.GET)
+    public void deleteByIdIsActive(Integer id) {
+        itemService.deleteByIdIsActive(id);
+    }
+    @RequestMapping(value = "/deleteByname", method = RequestMethod.GET)
+    public void deleteByItemName(String  name) {
+       itemService.deleteByItemName(name);
+    }
 }

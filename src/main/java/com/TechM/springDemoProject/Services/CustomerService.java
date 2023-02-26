@@ -97,4 +97,9 @@ public class CustomerService {
 
     }
 
+
+    public void deleteCustomersByFirstName(String customerFirstName) {
+        customerRepository.deleteByCustomerFirstName(customerFirstName);
+    }
+
 }
