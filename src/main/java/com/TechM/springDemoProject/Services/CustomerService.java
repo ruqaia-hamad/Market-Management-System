@@ -6,6 +6,8 @@ import com.TechM.springDemoProject.Repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -104,5 +106,19 @@ public class CustomerService {
 
     public void deleteAll(){
         customerRepository.deleteAll();
+
     }
+
+
+    public void createCustomer(String firstName, String lastName, String contact) throws ParseException {
+        Customer customer = new Customer();
+        customer.setCustomerFirstName(firstName);
+        customer.setCustomerSecondName(lastName);
+        customer.setContact(contact);
+        customerRepository.save(customer);
+    }
+
+
+
+
 }

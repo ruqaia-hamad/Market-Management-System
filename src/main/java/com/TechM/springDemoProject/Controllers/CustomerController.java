@@ -1,10 +1,17 @@
 package com.TechM.springDemoProject.Controllers;
 
 import com.TechM.springDemoProject.Models.Customer;
+import com.TechM.springDemoProject.RequestObject.CustomerRequest;
+import com.TechM.springDemoProject.RequestObject.CustomerRequestForCreateCustomer;
 import com.TechM.springDemoProject.Services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -96,7 +103,13 @@ public class CustomerController {
         customerService.deleteAll();
     }
 
-}
+
+    @RequestMapping(value = "/customers", method = RequestMethod.POST)
+    public void createCustomer(@RequestBody CustomerRequestForCreateCustomer customerRequest) throws ParseException {
+        customerService.createCustomer(customerRequest.getFirstName(),customerRequest.getSecondName(),customerRequest.getContact());
+
+
+}}
 
 
 
