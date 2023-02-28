@@ -2,10 +2,13 @@ package com.TechM.springDemoProject.Controllers;
 
 import com.TechM.springDemoProject.Models.Invoice;
 import com.TechM.springDemoProject.Models.Item;
+import com.TechM.springDemoProject.RequestObject.InvoiceRequest;
+import com.TechM.springDemoProject.RequestObject.ItemRequest;
 import com.TechM.springDemoProject.Services.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.List;
 
 @RestController
@@ -39,6 +42,7 @@ public class ItemController {
         Item item = itemService.getItemByName(name);
         return item;
     }
+
     @GetMapping(value = "addItem")
     public void addItem() {
         itemService.addItem();
@@ -47,13 +51,13 @@ public class ItemController {
 
     @RequestMapping(value = "/getIsActive", method = RequestMethod.GET)
     public List<Item> getAllActiveItems() {
-        List<Item> items= itemService.getAllActiveItems();
+        List<Item> items = itemService.getAllActiveItems();
         return items;
     }
 
     @RequestMapping(value = "/getInActive", method = RequestMethod.GET)
     public List<Item> getAllInActiveItems() {
-        List<Item> items= itemService.getAllInActiveItems();
+        List<Item> items = itemService.getAllInActiveItems();
         return items;
     }
 
@@ -62,17 +66,25 @@ public class ItemController {
         Item item = itemService.findTopByOrderById();
         return item;
     }
+
     @RequestMapping(value = "/deleteById", method = RequestMethod.GET)
     public void deleteByIdIsActive(Integer id) {
         itemService.deleteByIdIsActive(id);
     }
+
     @RequestMapping(value = "/deleteByname", method = RequestMethod.GET)
-    public void deleteByItemName(String  name) {
-       itemService.deleteByItemName(name);
+    public void deleteByItemName(String name) {
+        itemService.deleteByItemName(name);
     }
 
     @RequestMapping(value = "/deleteAll", method = RequestMethod.GET)
     public void deleteAll() {
         itemService.deleteAll();
+    }
+
+
+    @RequestMapping(value = "/createItem", method = RequestMethod.POST)
+    public void createNewItem(@RequestBody ItemRequest itemRequest) throws ParseException {
+        itemService.createNewItem(itemRequest.getName(), itemRequest.getPrice(), itemRequest.getInvoiceId(), itemRequest.getCreatedDate(), itemRequest.getIsActive());
     }
 }
