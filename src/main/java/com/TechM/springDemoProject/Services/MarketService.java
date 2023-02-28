@@ -7,6 +7,10 @@ import com.TechM.springDemoProject.Repositories.MarketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -37,12 +41,12 @@ public class MarketService {
     }
 
     public List<Market> getAllActiveMarkets() {
-        List<Market>  markets= marketRepository.findAllActive();
+        List<Market> markets = marketRepository.findAllActive();
         return markets;
     }
 
     public List<Market> getAllInActiveMarkets() {
-        List<Market>  markets= marketRepository.findAllInActive();
+        List<Market> markets = marketRepository.findAllInActive();
         return markets;
     }
 
@@ -57,13 +61,33 @@ public class MarketService {
         marketRepository.deleteByIdIsActive(id);
 
     }
-    public void deleteByMarketName(String name){
+
+    public void deleteByMarketName(String name) {
         marketRepository.deleteByMarketName(name);
     }
 
 
-    public void deleteAll(){
+    public void deleteAll() {
         marketRepository.deleteAll();
+    }
+
+    public void setCreatedDateByUserInput(String stringDate, Integer id) throws ParseException {
+        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date convetedDate = formatter.parse(stringDate);
+        Market market = marketRepository.getMarketById(id);
+        market.setCreatedDate(convetedDate);
+        marketRepository.save(market);
+
+    }
+
+    public void createNewMarket(String createdDate,String marketName, boolean isValid) throws ParseException {
+        Market market=new Market();
+        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date convetedDate = formatter.parse(createdDate);
+        market.setCreatedDate(convetedDate);
+        market.setIsActive(isValid);
+        market.setName(marketName);
+
     }
 
 }

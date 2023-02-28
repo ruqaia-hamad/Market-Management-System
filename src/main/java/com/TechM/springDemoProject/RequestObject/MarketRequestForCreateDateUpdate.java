@@ -12,5 +12,8 @@ public class MarketRequestForCreateDateUpdate {
 
     String date;
     Integer id;
+    String createdDate;
+    Boolean isActive;
+    String name;
 
 }

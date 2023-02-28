@@ -2,16 +2,19 @@ package com.TechM.springDemoProject.Controllers;
 
 import com.TechM.springDemoProject.Models.Item;
 import com.TechM.springDemoProject.Models.Market;
+import com.TechM.springDemoProject.RequestObject.CustomerRequestForCreateCustomer;
+import com.TechM.springDemoProject.RequestObject.MarketRequestForCreateDateUpdate;
 import com.TechM.springDemoProject.Services.MarketService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.actuate.endpoint.invoke.ParameterMappingException;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.List;
 
 @RestController
 @RequestMapping(value = "Market")
-public class MarketController
-{
+public class MarketController {
     @Autowired
     MarketService marketService;
 
@@ -41,14 +44,14 @@ public class MarketController
     }
 
     @RequestMapping(value = "/getIsActive", method = RequestMethod.GET)
-    public List<Market> getAllActiveMarkets(){
-        List<Market> markets= marketService.getAllMarkets();
+    public List<Market> getAllActiveMarkets() {
+        List<Market> markets = marketService.getAllMarkets();
         return markets;
     }
 
     @RequestMapping(value = "/getInActive", method = RequestMethod.GET)
-    public List<Market> getAllInActiveMarkets(){
-        List<Market> markets= marketService.getAllInActiveMarkets();
+    public List<Market> getAllInActiveMarkets() {
+        List<Market> markets = marketService.getAllInActiveMarkets();
         return markets;
     }
 
@@ -57,12 +60,14 @@ public class MarketController
         Market market = marketService.findTopByOrderById();
         return market;
     }
+
     @RequestMapping(value = "/deleteById", method = RequestMethod.GET)
     public void deleteByIdIsActive(Integer id) {
         marketService.deleteByIdIsActive(id);
     }
-    @RequestMapping(value = "/deleteByname", method = RequestMethod.GET)
-    public void deleteByMarketName(String  name) {
+
+    @RequestMapping(value = "/deleteByName", method = RequestMethod.GET)
+    public void deleteByMarketName(String name) {
         marketService.deleteByMarketName(name);
     }
 
@@ -71,6 +76,18 @@ public class MarketController
         marketService.deleteAll();
     }
 
+
+    @RequestMapping(value = "/updateCreatedDateUserInput", method = RequestMethod.POST)
+    public void setCreatedDateByUserInput(@RequestBody MarketRequestForCreateDateUpdate data) throws ParseException {
+        marketService.setCreatedDateByUserInput(data.getDate(), data.getId());
+    }
+
+    @RequestMapping(value = "/createMarket", method = RequestMethod.POST)
+    public void createMarket(@RequestBody MarketRequestForCreateDateUpdate marketRequest) throws ParseException {
+        marketService.createNewMarket(marketRequest.getCreatedDate(), marketRequest.getName(), marketRequest.getIsActive());
+
+
+    }
 }
 
 
