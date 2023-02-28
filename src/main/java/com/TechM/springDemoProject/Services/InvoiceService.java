@@ -3,10 +3,15 @@ package com.TechM.springDemoProject.Services;
 import com.TechM.springDemoProject.Models.Customer;
 import com.TechM.springDemoProject.Models.Invoice;
 import com.TechM.springDemoProject.Models.Market;
+import com.TechM.springDemoProject.Repositories.CustomerRepository;
 import com.TechM.springDemoProject.Repositories.InvoiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -14,6 +19,8 @@ public class InvoiceService {
     @Autowired
     InvoiceRepository invoiceRepository;
 
+    @Autowired
+    CustomerRepository customerRepository;
 
     public void addInvoice() {
         Invoice invoice = new Invoice();
@@ -80,6 +87,20 @@ public class InvoiceService {
 
     public void deleteAll(){
         invoiceRepository.deleteAll();
+    }
+
+
+    public void createInvoice(  String email,String fax,String website, Integer customerId,String createdDate,Boolean isActive) throws ParseException {
+        Invoice invoice=new Invoice();
+        invoice.setEmail(email);
+        invoice.setFax(fax);
+        Customer customer=customerRepository.getCustomerById(customerId);
+        invoice.setCustomer(customer);
+        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date convetedDate = formatter.parse(createdDate);
+        invoice.setCreatedDate(convetedDate);
+        invoice.setIsActive(isActive);
+        invoiceRepository.save(invoice);
     }
 }
 

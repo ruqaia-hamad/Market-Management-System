@@ -2,10 +2,13 @@ package com.TechM.springDemoProject.Controllers;
 
 import com.TechM.springDemoProject.Models.Customer;
 import com.TechM.springDemoProject.Models.Invoice;
+import com.TechM.springDemoProject.RequestObject.CustomerRequestForCreateCustomer;
+import com.TechM.springDemoProject.RequestObject.InvoiceRequest;
 import com.TechM.springDemoProject.Services.InvoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.List;
 
 @RestController
@@ -54,13 +57,13 @@ public class InvoiceController {
 
     @RequestMapping(value = "/getIsActive", method = RequestMethod.GET)
     public List<Invoice> getAllActiveInvoices() {
-        List<Invoice> invoces= invoiceService.getAllActiveInvoices();
+        List<Invoice> invoces = invoiceService.getAllActiveInvoices();
         return invoces;
     }
 
     @RequestMapping(value = "/getInActive", method = RequestMethod.GET)
     public List<Invoice> getAllInActiveInvoices() {
-        List<Invoice> invoces= invoiceService.getAllInActiveInvoices();
+        List<Invoice> invoces = invoiceService.getAllInActiveInvoices();
         return invoces;
     }
 
@@ -74,13 +77,22 @@ public class InvoiceController {
     public void deleteByIdIsActive(Integer id) {
         invoiceService.deleteByIdIsActive(id);
     }
+
     @RequestMapping(value = "/deleteByEmail", method = RequestMethod.GET)
-    public void deleteByInvoiceEmail(String  email) {
-   invoiceService.deleteByInvoiceEmail(email);
+    public void deleteByInvoiceEmail(String email) {
+        invoiceService.deleteByInvoiceEmail(email);
     }
 
     @RequestMapping(value = "/deleteAll", method = RequestMethod.GET)
     public void deleteAll() {
         invoiceService.deleteAll();
     }
+
+    @RequestMapping(value = "/createInvoice", method = RequestMethod.POST)
+    public void createInvoice(@RequestBody InvoiceRequest invoiceRequest) throws ParseException {
+        invoiceService.createInvoice(invoiceRequest.getEmail(), invoiceRequest.getFax(), invoiceRequest.getWebsite(), invoiceRequest.getCustomerId(), invoiceRequest.getCreatedDate(), invoiceRequest.getIsActive());
+
+
+    }
+
 }
