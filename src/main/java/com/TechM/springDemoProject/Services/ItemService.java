@@ -112,6 +112,45 @@ public class ItemService {
         itemRepository.saveAll(items);
     }
 
+    public void deleteAllItemsByInvoiceId(Integer id) {
+        Iterable<Item> items = itemRepository.findByInvoiceId(id);
+        for (Item item: items) {
+            item.setIsActive(false);
 
+        }
+        itemRepository.saveAll(items);
+    }
+
+    public void deleteByCreatedDate(Date createdDate){
+        Iterable<Item> items = itemRepository.findByCreatedDate(createdDate);
+        for (Item item: items) {
+            item.setIsActive(false);
+
+        }
+        itemRepository.saveAll(items);
+
+    }
+
+    public void deleteByUpdatedDate(Date updatedDate){
+        Iterable<Item> items = itemRepository.findByUpdateDate(updatedDate);
+        for (Item item: items) {
+            item.setIsActive(false);
+
+        }
+        itemRepository.saveAll(items);
+
+    }
+
+
+    public void deleteByCreatedAfterDate(Date date) {
+        Iterable<Item> items = itemRepository.findByCreatedDateAfter(date);
+        for (Item item: items) {
+            item.setIsActive(false);
+
+        }
+        itemRepository.saveAll(items);
+
+
+    }
 
 }

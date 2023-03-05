@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -105,5 +106,26 @@ public class InvoiceController {
 
 
     }
+
+    @GetMapping(value = "deleteCustomerByInvoiceId")
+    public void  deleteInvoiceByCustomerId(@RequestParam Integer id) {
+        invoiceService. deleteInvoiceByCustomerId(id);
+
+    }
+
+    @RequestMapping(value="/deleteByUpdatedDate", method = RequestMethod.GET)
+    public void deleteByUpdatedDate(@RequestParam("updatedDate") Date updatedDate) {
+        invoiceService.deleteByUpdatedDate(updatedDate);
+    }
+
+    @RequestMapping(value="/deleteByCreatedDate", method = RequestMethod.GET)
+    public void deleteByCreatedDate(@RequestParam("createdDate") Date createdDate) {
+        invoiceService.deleteByCreatedDate(createdDate);
+    }
+    @RequestMapping(value="/deleteByCreatedAfterDate", method = RequestMethod.GET)
+    public void deleteByAfterCreatedDate(@RequestParam("date") Date date) {
+        invoiceService.deleteByCreatedAfterDate(date);
+    }
+
 
 }

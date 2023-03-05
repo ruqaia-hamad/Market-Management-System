@@ -9,10 +9,16 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 @Repository
 public interface InvoiceRepository extends CrudRepository<Invoice, Integer> {
+
+
+    Iterable<Invoice> findByUpdateDate(Date updatedDate);
+    Iterable<Invoice> findByCreatedDate(Date createdDate);
+    Iterable<Invoice> findByCreatedDateAfter(Date date);
     @Query(value = "SELECT m FROM Invoice m")
     List<Invoice> getAllInvoices();
 
@@ -35,6 +41,8 @@ public interface InvoiceRepository extends CrudRepository<Invoice, Integer> {
     @Query("SELECT i FROM Invoice i WHERE i.isActive = false")
     List<Invoice> findAllInActive();
 
+    @Query(value = "SELECT i FROM Invoice i WHERE i.customer.id = :customer_Id")
+    List<Invoice> findByCustomerId(@Param("customer_Id") Integer customer_Id);
 
     @Query("SELECT i FROM Invoice i WHERE i.id = (SELECT MAX(i.id) FROM Invoice i)")
 

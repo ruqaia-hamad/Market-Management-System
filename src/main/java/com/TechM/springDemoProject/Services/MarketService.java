@@ -110,4 +110,36 @@ public class MarketService {
         marketRepository.saveAll(markets);
     }
 
+
+    public void deleteByCreatedDate(Date createdDate){
+        Iterable<Market> markets = marketRepository.findByCreatedDate(createdDate);
+        for (Market market: markets) {
+            market.setIsActive(false);
+
+        }
+        marketRepository.saveAll(markets);
+
+    }
+
+    public void deleteByUpdatedDate(Date updatedDate){
+        Iterable<Market> markets = marketRepository.findByUpdateDate(updatedDate);
+        for (Market market: markets) {
+            market.setIsActive(false);
+
+        }
+        marketRepository.saveAll(markets);
+
+    }
+    public void deleteByCreatedAfterDate(Date date) {
+        Iterable<Market> markets = marketRepository.findByCreatedDateAfter(date);
+        for (Market market: markets) {
+            market.setIsActive(false);
+
+        }
+        marketRepository.saveAll(markets);
+
+
+    }
+
+
 }

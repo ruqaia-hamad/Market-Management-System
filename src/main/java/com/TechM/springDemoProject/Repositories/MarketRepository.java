@@ -1,5 +1,6 @@
 package com.TechM.springDemoProject.Repositories;
 
+import com.TechM.springDemoProject.Models.Customer;
 import com.TechM.springDemoProject.Models.Item;
 import com.TechM.springDemoProject.Models.Market;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -10,10 +11,14 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 @Repository
 public interface MarketRepository extends CrudRepository<Market, Integer> {
+    Iterable<Market> findByUpdateDate(Date updatedDate);
+    Iterable<Market> findByCreatedDate(Date createdDate);
+    Iterable<Market> findByCreatedDateAfter(Date date);
     @Query(value = "SELECT m FROM Market m")
     List<Market> getAllMarkets();
 

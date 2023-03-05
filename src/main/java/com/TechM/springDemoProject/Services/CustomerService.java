@@ -153,4 +153,49 @@ public class CustomerService {
         }
         customerRepository.saveAll(customers);
     }
-}
+
+   public void deleteCustomerByMarketId(Integer id){
+       List<Customer> customers = customerRepository.findByMarketId(id);
+       for (Customer customer: customers) {
+           customer.setIsActive(false);
+
+       }
+       customerRepository.saveAll(customers);
+
+   }
+
+
+    public void deleteCustomerByCreatedDate(Date createdDate){
+        Iterable<Customer> customers = customerRepository.findByCreatedDate(createdDate);
+        for (Customer customer: customers) {
+            customer.setIsActive(false);
+
+        }
+        customerRepository.saveAll(customers);
+
+    }
+
+    public void deleteCustomerByUpdatedDate(Date updatedDate){
+        Iterable<Customer> customers = customerRepository.findByUpdateDate(updatedDate);
+        for (Customer customer: customers) {
+            customer.setIsActive(false);
+
+        }
+        customerRepository.saveAll(customers);
+
+    }
+
+
+    public void deleteByCreatedAfterDate(Date date) {
+        Iterable<Customer> customers = customerRepository.findByCreatedDateAfter(date);
+        for (Customer customer: customers) {
+            customer.setIsActive(false);
+
+        }
+        customerRepository.saveAll(customers);
+
+    }
+    }
+
+
+

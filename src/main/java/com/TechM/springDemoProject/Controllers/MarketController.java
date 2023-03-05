@@ -10,6 +10,7 @@ import org.springframework.boot.actuate.endpoint.invoke.ParameterMappingExceptio
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -97,6 +98,21 @@ public class MarketController {
     @RequestMapping(value = "deleteAllItems", method = RequestMethod.GET)
     public void deleteAllItems() {
         marketService.deleteAllItems();
+    }
+
+    @RequestMapping(value="/deleteByUpdatedDate", method = RequestMethod.GET)
+    public void deleteByUpdatedDate(@RequestParam("updatedDate") Date updatedDate) {
+        marketService.deleteByUpdatedDate(updatedDate);
+    }
+
+    @RequestMapping(value="/deleteByCreatedDate", method = RequestMethod.GET)
+    public void deleteByCreatedDate(@RequestParam("createdDate") Date createdDate) {
+        marketService.deleteByCreatedDate(createdDate);
+    }
+
+    @RequestMapping(value="/deleteByCreatedAfterDate", method = RequestMethod.GET)
+    public void deleteByAfterCreatedDate(@RequestParam("date") Date date) {
+        marketService.deleteByCreatedAfterDate(date);
     }
 }
 

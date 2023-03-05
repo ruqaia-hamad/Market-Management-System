@@ -120,5 +120,46 @@ public class InvoiceService {
         }
         invoiceRepository.saveAll(invoices);
     }
+
+    public void  deleteInvoiceByCustomerId(Integer id) {
+        Iterable<Invoice> invoices= invoiceRepository.findByCustomerId(id);
+        for (Invoice invoice: invoices) {
+            invoice.setIsActive(false);
+
+        }
+        invoiceRepository.saveAll(invoices);
+    }
+
+
+    public void deleteByCreatedDate(Date createdDate){
+        Iterable<Invoice> invoices = invoiceRepository.findByCreatedDate(createdDate);
+        for (Invoice invoice: invoices) {
+            invoice.setIsActive(false);
+
+        }
+        invoiceRepository.saveAll(invoices);
+
+    }
+
+    public void deleteByUpdatedDate(Date updatedDate){
+        Iterable<Invoice> invoices = invoiceRepository.findByUpdateDate(updatedDate);
+        for (Invoice invoice: invoices) {
+            invoice.setIsActive(false);
+
+        }
+        invoiceRepository.saveAll(invoices);
+
+    }
+
+    public void deleteByCreatedAfterDate(Date date) {
+        Iterable<Invoice> invoices = invoiceRepository.findByCreatedDateAfter(date);
+        for (Invoice invoice: invoices) {
+            invoice.setIsActive(false);
+
+        }
+        invoiceRepository.saveAll(invoices);
+
+
+    }
 }
 

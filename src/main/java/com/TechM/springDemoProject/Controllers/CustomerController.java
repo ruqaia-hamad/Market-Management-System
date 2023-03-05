@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -64,6 +65,12 @@ public class CustomerController {
     public String deleteCutomerById(@RequestParam Integer id) {
         customerService.deleteCustomerById(id);
         return "Recored delete";
+    }
+
+    @GetMapping(value = "deleteCustomerByMarketId")
+    public void deleteCustomerByMarketId(@RequestParam Integer id) {
+        customerService.deleteCustomerByMarketId(id);
+
     }
 
 
@@ -128,6 +135,22 @@ public class CustomerController {
 
 
     }
+
+
+    @RequestMapping(value="/deleteByUpdatedDate", method = RequestMethod.GET)
+    public void deleteCustomerByUpdatedDate(@RequestParam("updatedDate") Date updatedDate) {
+        customerService.deleteCustomerByUpdatedDate(updatedDate);
+    }
+
+    @RequestMapping(value="/deleteByCreatedDate", method = RequestMethod.GET)
+    public void deleteByCreatedDate(@RequestParam("createdDate") Date createdDate) {
+        customerService.deleteCustomerByCreatedDate(createdDate);
+    }
+    @RequestMapping(value="/deleteByCreatedAfterDate", method = RequestMethod.GET)
+    public void deleteByAfterCreatedDate(@RequestParam("date") Date date) {
+        customerService.deleteByCreatedAfterDate(date);
+    }
+
 }
 
 

@@ -1,5 +1,6 @@
 package com.TechM.springDemoProject.Repositories;
 
+import com.TechM.springDemoProject.Models.Customer;
 import com.TechM.springDemoProject.Models.Invoice;
 import com.TechM.springDemoProject.Models.Item;
 import org.springframework.data.jpa.repository.Modifying;
@@ -9,10 +10,15 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 @Repository
 public interface ItemRepository extends CrudRepository<Item, Integer> {
+
+    Iterable<Item> findByUpdateDate(Date updatedDate);
+    Iterable<Item> findByCreatedDate(Date createdDate);
+    Iterable<Item> findByCreatedDateAfter(Date date);
     @Query(value = "SELECT m FROM Item m")
     List<Item> getAllItems();
 
@@ -37,6 +43,10 @@ public interface ItemRepository extends CrudRepository<Item, Integer> {
     @Query("SELECT i FROM Item i WHERE i.id = (SELECT MAX(i.id) FROM Item i)")
 
     Item findTopByOrderById();
+
+    @Query(value = "SELECT i FROM Item i WHERE i.invoice.id = :invoice_Id")
+    List<Item> findByInvoiceId(@Param("invoice_Id") Integer customer_Id);
+
 
     @Modifying
     @Transactional
