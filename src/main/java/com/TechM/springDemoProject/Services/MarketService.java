@@ -2,6 +2,7 @@ package com.TechM.springDemoProject.Services;
 
 import com.TechM.springDemoProject.Models.Customer;
 import com.TechM.springDemoProject.Models.Invoice;
+import com.TechM.springDemoProject.Models.Item;
 import com.TechM.springDemoProject.Models.Market;
 import com.TechM.springDemoProject.Repositories.MarketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,9 +63,6 @@ public class MarketService {
 
     }
 
-    public void deleteByMarketName(String name) {
-        marketRepository.deleteByMarketName(name);
-    }
 
 
     public void deleteAll() {
@@ -88,6 +86,28 @@ public class MarketService {
         market.setIsActive(isValid);
         market.setName(marketName);
 
+    }
+
+
+    public void deleteMarketByID(Integer id) {
+        Market market=marketRepository.getMarketById(id);
+        market.setIsActive(false);
+        marketRepository.save(market);
+    }
+
+    public void deleteMarketByName(String name) {
+        Market market=marketRepository.getMarketByName(name);
+        market.setIsActive(false);
+        marketRepository.save(market);
+    }
+
+    public void deleteAllItems() {
+        Iterable<Market> markets = marketRepository.findAll();
+        for (Market market: markets) {
+            market.setIsActive(false);
+
+        }
+        marketRepository.saveAll(markets);
     }
 
 }

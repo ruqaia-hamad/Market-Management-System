@@ -2,12 +2,18 @@ package com.TechM.springDemoProject.Services;
 
 import com.TechM.springDemoProject.Models.Customer;
 import com.TechM.springDemoProject.Controllers.CustomerMarketDTO;
+import com.TechM.springDemoProject.Models.Market;
 import com.TechM.springDemoProject.Repositories.CustomerRepository;
+import com.TechM.springDemoProject.Repositories.MarketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.ResourceAccessException;
 
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -16,6 +22,8 @@ public class CustomerService {
     private static final Logger LOG = Logger.getLogger(CustomerService.class.getName());
     @Autowired
     CustomerRepository customerRepository;
+    @Autowired
+    MarketRepository marketRepository;
 
 
     public void addCustomer() {
@@ -81,7 +89,7 @@ public class CustomerService {
     }
 
     public Customer findTopByOrderById() {
-    Customer customer = customerRepository.findTopByOrderById();
+        Customer customer = customerRepository.findTopByOrderById();
         return customer;
 
     }
@@ -92,10 +100,8 @@ public class CustomerService {
     }
 
 
-
-
     public void deleteByIdIsActive(Integer id) {
-         customerRepository.deleteByIdIsActive(id);
+        customerRepository.deleteByIdIsActive(id);
 
     }
 
@@ -104,21 +110,47 @@ public class CustomerService {
         customerRepository.deleteByCustomerFirstName(customerFirstName);
     }
 
-    public void deleteAll(){
+    public void deleteAll() {
         customerRepository.deleteAll();
 
     }
 
 
-    public void createCustomer(String firstName, String lastName, String contact) throws ParseException {
+    public void createCustomer(String firstName, String lastName, String contact, String stringDate, boolean isValid, Integer marketId) throws ParseException {
         Customer customer = new Customer();
         customer.setCustomerFirstName(firstName);
         customer.setCustomerSecondName(lastName);
         customer.setContact(contact);
+        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date convetedDate = formatter.parse(stringDate);
+        customer.setCreatedDate(convetedDate);
+        customer.setIsActive(isValid);
+        Market market = marketRepository.getMarketById(marketId);
+        customer.setMarket(market);
         customerRepository.save(customer);
     }
 
 
+    public void deleteCustomerByID(Integer id) {
+        Customer customer = customerRepository.getCustomerById(id);
+        customer.setIsActive(false);
+        customerRepository.save(customer);
+    }
 
 
+    public void deleteCustomerFirstName(String customerFirstName) {
+        Customer customer = customerRepository.getCustomerByFirstName(customerFirstName);
+        customer.setIsActive(false);
+        customerRepository.save(customer);
+    }
+
+
+    public void deleteAllCustomers() {
+        List<Customer> customers = customerRepository.findAll();
+        for (Customer customer: customers) {
+            customer.setIsActive(false);
+
+        }
+        customerRepository.saveAll(customers);
+    }
 }

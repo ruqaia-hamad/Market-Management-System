@@ -80,10 +80,7 @@ public class InvoiceService {
 
     }
 
-    public void deleteByInvoiceEmail(String email) {
-        invoiceRepository.deleteByInvoiceEmail(email);
 
-    }
 
     public void deleteAll(){
         invoiceRepository.deleteAll();
@@ -101,6 +98,27 @@ public class InvoiceService {
         invoice.setCreatedDate(convetedDate);
         invoice.setIsActive(isActive);
         invoiceRepository.save(invoice);
+    }
+
+    public void deleteInvoiceByID(Integer id) {
+        Invoice invoice=invoiceRepository.getInvoiceById(id);
+        invoice.setIsActive(false);
+        invoiceRepository.save(invoice);
+    }
+
+    public void deleteInvoiceByEmail(String email) {
+        Invoice invoice=invoiceRepository.getInvoiceByEmail(email);
+        invoice.setIsActive(false);
+        invoiceRepository.save(invoice);
+    }
+
+    public void deleteAllInvoices() {
+     Iterable<Invoice> invoices= invoiceRepository.findAll();
+        for (Invoice invoice: invoices) {
+            invoice.setIsActive(false);
+
+        }
+        invoiceRepository.saveAll(invoices);
     }
 }
 

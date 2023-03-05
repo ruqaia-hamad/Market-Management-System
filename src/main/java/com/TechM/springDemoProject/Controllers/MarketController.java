@@ -61,14 +61,19 @@ public class MarketController {
         return market;
     }
 
-    @RequestMapping(value = "/deleteById", method = RequestMethod.GET)
+    @RequestMapping(value = "/delete", method = RequestMethod.GET)
     public void deleteByIdIsActive(Integer id) {
         marketService.deleteByIdIsActive(id);
     }
 
+    @RequestMapping(value = "/deleteById", method = RequestMethod.GET)
+    public void deleteMarketByID(Integer id) {
+        marketService.deleteMarketByID(id);
+    }
+
     @RequestMapping(value = "/deleteByName", method = RequestMethod.GET)
     public void deleteByMarketName(String name) {
-        marketService.deleteByMarketName(name);
+        marketService.deleteMarketByName(name);
     }
 
     @RequestMapping(value = "/deleteAll", method = RequestMethod.GET)
@@ -87,6 +92,11 @@ public class MarketController {
         marketService.createNewMarket(marketRequest.getCreatedDate(), marketRequest.getName(), marketRequest.getIsActive());
 
 
+    }
+
+    @RequestMapping(value = "deleteAllItems", method = RequestMethod.GET)
+    public void deleteAllItems() {
+        marketService.deleteAllItems();
     }
 }
 

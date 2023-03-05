@@ -33,8 +33,12 @@ public class Customer extends  BaseEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "Market_Id", referencedColumnName = "id")
+    @JoinColumn(name = "market_Id", referencedColumnName = "id")
     Market market;
+
+
+
+
 
     public Integer getId() {
         return id;

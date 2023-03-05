@@ -1,6 +1,8 @@
 package com.TechM.springDemoProject.Controllers;
 
 import com.TechM.springDemoProject.Models.Customer;
+import com.TechM.springDemoProject.Models.Item;
+import com.TechM.springDemoProject.Repositories.CustomerRepository;
 import com.TechM.springDemoProject.RequestObject.CustomerRequest;
 import com.TechM.springDemoProject.RequestObject.CustomerRequestForCreateCustomer;
 import com.TechM.springDemoProject.Services.CustomerService;
@@ -78,6 +80,10 @@ public class CustomerController {
     }
 
 
+    @RequestMapping(value = "deleteAllCustomers", method = RequestMethod.GET)
+    public void deleteAllCustomers() {
+        customerService.deleteAllCustomers();
+    }
 
     @RequestMapping(value = "/getLatestUpdated", method = RequestMethod.GET)
     public List<Customer> findTopByOrderByUpdated() {
@@ -88,12 +94,24 @@ public class CustomerController {
 
     @RequestMapping(value = "/delete", method = RequestMethod.GET)
     public void deleteByIdIsActive(Integer id) {
-      customerService.deleteByIdIsActive(id);
+        customerService.deleteByIdIsActive(id);
     }
 
 
+    @RequestMapping(value = "/getLatestRow", method = RequestMethod.GET)
+    public Customer findTopByOrderById() {
+        Customer customer = customerService.findTopByOrderById();
+        return customer;
+    }
+    @RequestMapping(value = "/deleteBYId", method = RequestMethod.GET)
+    public void deleteCustomerByID(Integer id) {
+        customerService.deleteCustomerByID(id);
+    }
+
+
+
     @RequestMapping(value = "/deleteByFirstName", method = RequestMethod.GET)
-    public void deleteByCustomerFirstName(String  customerFirstName) {
+    public void deleteByCustomerFirstName(String customerFirstName) {
         customerService.deleteCustomersByFirstName(customerFirstName);
     }
 
@@ -106,10 +124,11 @@ public class CustomerController {
 
     @RequestMapping(value = "/customers", method = RequestMethod.POST)
     public void createCustomer(@RequestBody CustomerRequestForCreateCustomer customerRequest) throws ParseException {
-        customerService.createCustomer(customerRequest.getFirstName(),customerRequest.getSecondName(),customerRequest.getContact());
+        customerService.createCustomer(customerRequest.getFirstName(), customerRequest.getSecondName(), customerRequest.getContact(), customerRequest.getCreatedDate(), customerRequest.getIsActive(), customerRequest.getMarketId());
 
 
-}}
+    }
+}
 
 
 

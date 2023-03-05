@@ -78,10 +78,21 @@ public class InvoiceController {
         invoiceService.deleteByIdIsActive(id);
     }
 
+    @RequestMapping(value = "/deleteBySetActiveFalse", method = RequestMethod.GET)
+    public void deleteItemByID(Integer id) {
+        invoiceService.deleteInvoiceByID(id);
+    }
+
     @RequestMapping(value = "/deleteByEmail", method = RequestMethod.GET)
     public void deleteByInvoiceEmail(String email) {
-        invoiceService.deleteByInvoiceEmail(email);
+        invoiceService.deleteInvoiceByEmail(email);
     }
+
+    @RequestMapping(value = "deleteAllInvoices", method = RequestMethod.GET)
+    public void deleteAllInvoices() {
+       invoiceService.deleteAllInvoices();
+    }
+
 
     @RequestMapping(value = "/deleteAll", method = RequestMethod.GET)
     public void deleteAll() {

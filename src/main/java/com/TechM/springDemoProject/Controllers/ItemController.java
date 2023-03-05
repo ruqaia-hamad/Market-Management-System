@@ -67,14 +67,20 @@ public class ItemController {
         return item;
     }
 
-    @RequestMapping(value = "/deleteById", method = RequestMethod.GET)
+    @RequestMapping(value = "/delete", method = RequestMethod.GET)
     public void deleteByIdIsActive(Integer id) {
         itemService.deleteByIdIsActive(id);
     }
 
+    @RequestMapping(value = "/deleteByID", method = RequestMethod.GET)
+    public void deleteItemByID(Integer id) {
+        itemService.deleteItemByID(id);
+    }
+
+
     @RequestMapping(value = "/deleteByname", method = RequestMethod.GET)
     public void deleteByItemName(String name) {
-        itemService.deleteByItemName(name);
+        itemService.deleteItemByName(name);
     }
 
     @RequestMapping(value = "/deleteAll", method = RequestMethod.GET)
@@ -87,4 +93,11 @@ public class ItemController {
     public void createNewItem(@RequestBody ItemRequest itemRequest) throws ParseException {
         itemService.createNewItem(itemRequest.getName(), itemRequest.getPrice(), itemRequest.getInvoiceId(), itemRequest.getCreatedDate(), itemRequest.getIsActive());
     }
+
+
+    @RequestMapping(value = "deleteAllItems", method = RequestMethod.GET)
+    public void deleteAllItems() {
+        itemService.deleteAllItems();
+    }
+
 }

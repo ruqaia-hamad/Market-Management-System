@@ -7,6 +7,8 @@ import com.TechM.springDemoProject.Models.Market;
 import com.TechM.springDemoProject.Repositories.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -71,10 +73,6 @@ public class ItemService {
 
     }
 
-    public void deleteByItemName(String name) {
-        itemRepository.deleteByItemName(name);
-    }
-
 
     public void deleteAll() {
         itemRepository.deleteAll();
@@ -93,6 +91,27 @@ public class ItemService {
         itemRepository.save(item);
 
     }
+
+    public void deleteItemByID(Integer id) {
+        Item item=itemRepository.getItemById(id);
+        item.setIsActive(false);
+        itemRepository.save(item);
+    }
+
+    public void deleteItemByName(String name) {
+        Item item=itemRepository.getItemByName(name);
+        item.setIsActive(false);
+        itemRepository.save(item);
+    }
+    public void deleteAllItems() {
+        Iterable<Item> items = itemRepository.findAll();
+        for (Item item: items) {
+            item.setIsActive(false);
+
+        }
+        itemRepository.saveAll(items);
+    }
+
 
 
 }
