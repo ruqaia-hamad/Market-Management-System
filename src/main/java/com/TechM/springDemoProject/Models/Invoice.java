@@ -17,7 +17,7 @@ public class Invoice extends BaseEntity {
     String website;
 
     @OneToOne
-    @JoinColumn(name = "Customer_Id", referencedColumnName = "id")
+    @JoinColumn(name = "customer_Id", referencedColumnName = "id")
     Customer customer;
 
     public Customer getCustomer() {

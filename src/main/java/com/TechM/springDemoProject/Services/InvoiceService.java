@@ -142,7 +142,7 @@ public class InvoiceService {
     }
 
     public void deleteByUpdatedDate(Date updatedDate){
-        Iterable<Invoice> invoices = invoiceRepository.findByUpdateDate(updatedDate);
+        Iterable<Invoice> invoices = invoiceRepository.findByUpdatedDate(updatedDate);
         for (Invoice invoice: invoices) {
             invoice.setIsActive(false);
 

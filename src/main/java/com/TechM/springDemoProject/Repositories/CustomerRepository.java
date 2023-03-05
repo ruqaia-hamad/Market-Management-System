@@ -3,6 +3,7 @@ package com.TechM.springDemoProject.Repositories;
 import com.TechM.springDemoProject.Models.Customer;
 
 import com.TechM.springDemoProject.Controllers.CustomerMarketDTO;
+import com.TechM.springDemoProject.Models.Item;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -18,8 +19,10 @@ import java.util.List;
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Integer> {
 
-    Iterable<Customer> findByUpdateDate(Date updatedDate);
-    Iterable<Customer> findByCreatedDate(Date createdDate);
+
+    @Query(value = "SELECT c FROM Customer c WHERE c.updatedDate = :updatedDate")
+    Iterable<Customer> findByUpdatedDate(@Param("updatedDate")Date updatedDate);
+    Iterable<Customer> findByCreatedDate(@Param("createdDate")Date createdDate);
 
     Iterable<Customer> findByCreatedDateAfter(Date date);
 

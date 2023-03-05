@@ -132,7 +132,7 @@ public class ItemService {
     }
 
     public void deleteByUpdatedDate(Date updatedDate){
-        Iterable<Item> items = itemRepository.findByUpdateDate(updatedDate);
+        Iterable<Item> items = itemRepository.findByUpdatedDate(updatedDate);
         for (Item item: items) {
             item.setIsActive(false);
 

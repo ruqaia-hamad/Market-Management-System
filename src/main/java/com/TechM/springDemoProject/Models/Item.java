@@ -12,7 +12,7 @@ public class Item  extends BaseEntity{
 
 
     @ManyToOne
-    @JoinColumn(name = "Invoice_Id", referencedColumnName = "id")
+    @JoinColumn(name = "invoice_Id", referencedColumnName = "id")
     Invoice invoice;
 
     public String getName() {

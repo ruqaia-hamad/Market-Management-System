@@ -175,15 +175,14 @@ public class CustomerService {
 
     }
 
-    public void deleteCustomerByUpdatedDate(Date updatedDate){
-        Iterable<Customer> customers = customerRepository.findByUpdateDate(updatedDate);
-        for (Customer customer: customers) {
+    public void deleteCustomerByUpdatedDate(Date updatedDate) {
+        Iterable<Customer> customers = customerRepository.findByUpdatedDate(updatedDate);
+        for (Customer customer : customers) {
             customer.setIsActive(false);
-
         }
         customerRepository.saveAll(customers);
-
     }
+
 
 
     public void deleteByCreatedAfterDate(Date date) {

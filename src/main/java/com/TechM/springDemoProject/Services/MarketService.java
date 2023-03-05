@@ -122,7 +122,7 @@ public class MarketService {
     }
 
     public void deleteByUpdatedDate(Date updatedDate){
-        Iterable<Market> markets = marketRepository.findByUpdateDate(updatedDate);
+        Iterable<Market> markets = marketRepository.findByUpdatedDate(updatedDate);
         for (Market market: markets) {
             market.setIsActive(false);
 

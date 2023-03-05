@@ -4,6 +4,7 @@ import com.TechM.springDemoProject.Models.Customer;
 import com.TechM.springDemoProject.Models.Item;
 import com.TechM.springDemoProject.Models.Market;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -15,9 +16,10 @@ import java.util.Date;
 import java.util.List;
 
 @Repository
-public interface MarketRepository extends CrudRepository<Market, Integer> {
-    Iterable<Market> findByUpdateDate(Date updatedDate);
-    Iterable<Market> findByCreatedDate(Date createdDate);
+public interface MarketRepository extends JpaRepository<Market, Integer> {
+
+    Iterable<Market> findByUpdatedDate(@Param("updatedDate") Date updatedDate);
+    Iterable<Market> findByCreatedDate(@Param("createdDate")Date createdDate);
     Iterable<Market> findByCreatedDateAfter(Date date);
     @Query(value = "SELECT m FROM Market m")
     List<Market> getAllMarkets();

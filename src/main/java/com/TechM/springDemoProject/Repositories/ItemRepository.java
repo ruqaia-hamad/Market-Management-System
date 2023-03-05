@@ -3,6 +3,8 @@ package com.TechM.springDemoProject.Repositories;
 import com.TechM.springDemoProject.Models.Customer;
 import com.TechM.springDemoProject.Models.Invoice;
 import com.TechM.springDemoProject.Models.Item;
+import com.TechM.springDemoProject.Models.Market;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -14,10 +16,10 @@ import java.util.Date;
 import java.util.List;
 
 @Repository
-public interface ItemRepository extends CrudRepository<Item, Integer> {
+public interface ItemRepository extends JpaRepository<Item, Integer> {
 
-    Iterable<Item> findByUpdateDate(Date updatedDate);
-    Iterable<Item> findByCreatedDate(Date createdDate);
+    Iterable<Item> findByUpdatedDate(@Param("updatedDate") Date updatedDate);
+    Iterable<Item> findByCreatedDate(@Param("createdDate")Date createdDate);
     Iterable<Item> findByCreatedDateAfter(Date date);
     @Query(value = "SELECT m FROM Item m")
     List<Item> getAllItems();
