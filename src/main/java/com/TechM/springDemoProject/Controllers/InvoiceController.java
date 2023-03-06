@@ -128,4 +128,10 @@ public class InvoiceController {
     }
 
 
+    @RequestMapping(value = "/getByCreatedDate", method = RequestMethod.GET)
+    public Invoice getInvoiceByUpdatedDate(Date updatedDate){
+        Invoice invoice = invoiceService.getInvoiceByUpdatedDate(updatedDate);
+        return invoice;
+    }
+
 }

@@ -81,6 +81,16 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
     @Modifying
     @Query("DELETE FROM Customer e")
     void deleteAll();
+
+
+
+    @Query(value = "SELECT c FROM Customer c where c.createdDate= :createdDate")
+    Customer getCustomerByCreatedDate(@Param("createdDate") Date createdDate);
+
+
+    @Query(value = "SELECT c FROM Customer c where c.updatedDate= :updatedDate")
+    Customer getCustomerByUpdatedDate(@Param("updatedDate") Date updatedDate);
+
 }
 
 

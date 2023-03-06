@@ -149,8 +149,17 @@ public class ItemService {
 
         }
         itemRepository.saveAll(items);
-
-
     }
 
+
+
+    public  Item getItemByCreatedDate(Date createdDate){
+        Item item = itemRepository.getItemByCreatedDate(createdDate);
+        return item;
+    }
+
+    public Item getItemByUpdatedDateDate(Date updatedDate) {
+        Item item=itemRepository.getItemByUpdatedDate(updatedDate);
+        return item;
+    }
 }

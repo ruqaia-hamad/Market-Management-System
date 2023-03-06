@@ -63,4 +63,13 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Integer> {
     @Modifying
     @Query("DELETE FROM Invoice e")
     void deleteAll();
+
+    @Query(value = "SELECT i FROM Invoice i where i.createdDate= :createdDate")
+   Invoice getInvoiceByCreatedDate(@Param("createdDate") Date createdDate);
+
+    @Query(value = "SELECT i FROM Invoice i where i.updatedDate= :updatedDate")
+    Invoice getInvoiceByUpdatedDate(@Param("updatedDate") Date updatedDate);
+
+
 }
+

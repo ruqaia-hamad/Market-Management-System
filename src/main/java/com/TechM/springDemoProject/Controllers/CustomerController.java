@@ -110,11 +110,23 @@ public class CustomerController {
         Customer customer = customerService.findTopByOrderById();
         return customer;
     }
+
+    @RequestMapping(value = "/getByCreatedDate", method = RequestMethod.GET)
+    public Customer getCustomerByCreatedDate(Date createdDate){
+        Customer customer = customerService.getCustomerByCreatedDate(createdDate);
+        return customer;
+    }
+
+    @RequestMapping(value = "/getByUpdatedDate", method = RequestMethod.GET)
+    public Customer getCustomerByUpdatedDate(Date updatedDate){
+        Customer customer = customerService.getCustomerByUpdatedDate(updatedDate);
+        return customer;
+    }
+
     @RequestMapping(value = "/deleteBYId", method = RequestMethod.GET)
     public void deleteCustomerByID(Integer id) {
         customerService.deleteCustomerByID(id);
     }
-
 
 
     @RequestMapping(value = "/deleteByFirstName", method = RequestMethod.GET)
@@ -137,16 +149,17 @@ public class CustomerController {
     }
 
 
-    @RequestMapping(value="/deleteByUpdatedDate", method = RequestMethod.GET)
+    @RequestMapping(value = "/deleteByUpdatedDate", method = RequestMethod.GET)
     public void deleteCustomerByUpdatedDate(@RequestParam("updatedDate") Date updatedDate) {
         customerService.deleteCustomerByUpdatedDate(updatedDate);
     }
 
-    @RequestMapping(value="/deleteByCreatedDate", method = RequestMethod.GET)
+    @RequestMapping(value = "/deleteByCreatedDate", method = RequestMethod.GET)
     public void deleteByCreatedDate(@RequestParam("createdDate") Date createdDate) {
         customerService.deleteCustomerByCreatedDate(createdDate);
     }
-    @RequestMapping(value="/deleteByCreatedAfterDate", method = RequestMethod.GET)
+
+    @RequestMapping(value = "/deleteByCreatedAfterDate", method = RequestMethod.GET)
     public void deleteByAfterCreatedDate(@RequestParam("date") Date date) {
         customerService.deleteByCreatedAfterDate(date);
     }

@@ -161,5 +161,16 @@ public class InvoiceService {
 
 
     }
+
+
+    public  Invoice getInvoiceByCreatedDate(Date createdDate){
+        Invoice invoice = invoiceRepository.getInvoiceByCreatedDate(createdDate);
+        return invoice;
+    }
+
+    public Invoice getInvoiceByUpdatedDate(Date updatedDate) {
+     Invoice invoice=invoiceRepository.getInvoiceByUpdatedDate(updatedDate);
+     return  invoice;
+    }
 }
 

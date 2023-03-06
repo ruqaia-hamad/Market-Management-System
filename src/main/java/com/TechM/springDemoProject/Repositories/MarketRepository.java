@@ -60,4 +60,13 @@ public interface MarketRepository extends JpaRepository<Market, Integer> {
             "ORDER BY customer_count DESC", nativeQuery = true)
     List<Object[]> findMarketWithCustomerNumber();
 
+
+
+    @Query(value = "SELECT  m FROM Market m where m.createdDate= :createdDate")
+    Market getMarketByCreatedDate(@Param("createdDate") Date createdDate);
+
+
+    @Query(value = "SELECT  m FROM Market m where m.updatedDate= :updatedDate")
+    Market getMarketByUpdatedDate(@Param("updatedDate") Date updatedDate);
+
 }

@@ -119,10 +119,11 @@ public class ItemController {
 
     }
 
-    @RequestMapping(value="/deleteByCreatedAfterDate", method = RequestMethod.GET)
-    public void deleteByAfterCreatedDate(@RequestParam("date") Date date) {
-        itemService.deleteByCreatedAfterDate(date);
-    }
 
+    @RequestMapping(value = "/getByCreatedDate", method = RequestMethod.GET)
+    public Item getItemByCreatedDate(Date updatedDate){
+        Item item = itemService.getItemByUpdatedDateDate(updatedDate);
+        return item;
+    }
 
 }

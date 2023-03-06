@@ -7,12 +7,11 @@ import com.TechM.springDemoProject.Repositories.CustomerRepository;
 import com.TechM.springDemoProject.Repositories.MarketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.ResourceAccessException;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
@@ -53,6 +52,11 @@ public class CustomerService {
         Customer customer = customerRepository.getCustomerByFirstName(customerFirstName);
         return customer;
 
+    }
+
+    public  Customer getCustomerByCreatedDate(Date createdDate){
+        Customer customer = customerRepository.getCustomerByCreatedDate(createdDate);
+        return customer;
     }
 
     public Customer getCustomerBySecondName(String customerSecondName) {
@@ -194,7 +198,13 @@ public class CustomerService {
         customerRepository.saveAll(customers);
 
     }
+
+
+    public Customer getCustomerByUpdatedDate(Date updatedDate) {
+        Customer customer=customerRepository.getCustomerByUpdatedDate(updatedDate);
+        return  customer;
     }
+}
 
 
 

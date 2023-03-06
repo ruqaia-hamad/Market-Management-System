@@ -157,4 +157,8 @@ public class MarketService {
     }
 
 
+    public  Market getMarketCreatedDate(Date createdDate){
+        Market market = marketRepository.getMarketByCreatedDate(createdDate);
+        return market;
+    }
 }

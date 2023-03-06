@@ -64,4 +64,14 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
     @Query("DELETE FROM Item i")
     void deleteAll();
 
+    @Query(value = "SELECT i FROM Item i where i.createdDate= :createdDate")
+    Item getItemByCreatedDate(@Param("createdDate") Date createdDate);
+
+
+    @Query(value = "SELECT i FROM Item i where i.updatedDate= :updatedDate")
+    Item getItemByUpdatedDate(@Param("updatedDate") Date updatedDate);
+
+
+
+
 }

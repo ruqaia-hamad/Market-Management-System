@@ -121,6 +121,18 @@ public class MarketController {
         List<Market> markets = marketService.getMarketsByNumberOfCustomers();
         return markets;
     }
+
+    @RequestMapping(value = "/getByCreatedDate", method = RequestMethod.GET)
+    public Market getItemByCreatedDate(Date createdDate){
+        Market market =marketService.getMarketCreatedDate(createdDate);
+        return market;
+    }
+
+    @RequestMapping(value = "/getByUpdatedDate", method = RequestMethod.GET)
+    public Market getItemByUpdatedDate(Date updatedDate){
+        Market market =marketService.getMarketCreatedDate(updatedDate);
+        return market;
+    }
 }
 
 
