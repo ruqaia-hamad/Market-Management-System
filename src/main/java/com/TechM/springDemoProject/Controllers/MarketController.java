@@ -100,19 +100,26 @@ public class MarketController {
         marketService.deleteAllItems();
     }
 
-    @RequestMapping(value="/deleteByUpdatedDate", method = RequestMethod.GET)
+    @RequestMapping(value = "/deleteByUpdatedDate", method = RequestMethod.GET)
     public void deleteByUpdatedDate(@RequestParam("updatedDate") Date updatedDate) {
         marketService.deleteByUpdatedDate(updatedDate);
     }
 
-    @RequestMapping(value="/deleteByCreatedDate", method = RequestMethod.GET)
+    @RequestMapping(value = "/deleteByCreatedDate", method = RequestMethod.GET)
     public void deleteByCreatedDate(@RequestParam("createdDate") Date createdDate) {
         marketService.deleteByCreatedDate(createdDate);
     }
 
-    @RequestMapping(value="/deleteByCreatedAfterDate", method = RequestMethod.GET)
+    @RequestMapping(value = "/deleteByCreatedAfterDate", method = RequestMethod.GET)
     public void deleteByAfterCreatedDate(@RequestParam("date") Date date) {
         marketService.deleteByCreatedAfterDate(date);
+    }
+
+
+    @GetMapping("/customercount")
+    public List<Market> getMarketsByNumberOfCustomers() {
+        List<Market> markets = marketService.getMarketsByNumberOfCustomers();
+        return markets;
     }
 }
 

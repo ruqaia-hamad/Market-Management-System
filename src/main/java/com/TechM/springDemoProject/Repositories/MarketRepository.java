@@ -53,4 +53,11 @@ public interface MarketRepository extends JpaRepository<Market, Integer> {
     @Query("DELETE FROM Market m")
     void deleteAll();
 
+    @Query(value = "SELECT m.id, m.market_name, COUNT(c.id) as customer_count " +
+            "FROM Market m " +
+            "LEFT JOIN Customer c ON m.id = c.market_id " +
+            "GROUP BY m.id, m.market_name " +
+            "ORDER BY customer_count DESC", nativeQuery = true)
+    List<Object[]> findMarketWithCustomerNumber();
+
 }

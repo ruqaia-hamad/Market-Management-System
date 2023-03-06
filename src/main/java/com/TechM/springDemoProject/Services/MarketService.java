@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -139,6 +140,20 @@ public class MarketService {
         marketRepository.saveAll(markets);
 
 
+    }
+
+    public List<Market> getMarketsByNumberOfCustomers() {
+        List<Object[]> result = marketRepository.findMarketWithCustomerNumber();
+        List<Market> markets = new ArrayList<>();
+
+        for (Object[] obj : result) {
+            Market market = new Market();
+            market.setId((Integer) obj[0]);
+            market.setName((String) obj[1]);
+            markets.add(market);
+        }
+
+        return markets;
     }
 
 
