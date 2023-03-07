@@ -91,6 +91,13 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
     @Query(value = "SELECT c FROM Customer c where c.updatedDate= :updatedDate")
     Customer getCustomerByUpdatedDate(@Param("updatedDate") Date updatedDate);
 
+
+
+    @Query(value = "SELECT DISTINCT market_Id FROM customer", nativeQuery = true)
+    List<Integer> getDistinctMarketIdsFromCustomer();
+
+    @Query(value = "SELECT COUNT(id) From customer where market_Id = ?1", nativeQuery = true)
+    Integer getCountOfCustomersByMarketId(Integer market_Id);
 }
 
 

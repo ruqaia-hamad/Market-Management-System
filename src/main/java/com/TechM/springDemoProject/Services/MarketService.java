@@ -4,6 +4,7 @@ import com.TechM.springDemoProject.Models.Customer;
 import com.TechM.springDemoProject.Models.Invoice;
 import com.TechM.springDemoProject.Models.Item;
 import com.TechM.springDemoProject.Models.Market;
+import com.TechM.springDemoProject.Repositories.CustomerRepository;
 import com.TechM.springDemoProject.Repositories.MarketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,9 @@ import java.util.List;
 public class MarketService {
     @Autowired
     MarketRepository marketRepository;
+
+    @Autowired
+    CustomerRepository customerRepository;
 
     public List<Market> getAllMarkets() {
         return marketRepository.getAllMarkets();
@@ -161,4 +165,23 @@ public class MarketService {
         Market market = marketRepository.getMarketByCreatedDate(createdDate);
         return market;
     }
+
+    public List<Market> getMarketsByNumberOfCustomers(Integer numberOfCustomers ) {
+        List<Integer> typesOfMarketIdsInCustomer = customerRepository.getDistinctMarketIdsFromCustomer();
+        //{1,2 }
+
+        List<Integer> MarketIdsThatUserWants = new ArrayList<>();
+
+        for (Integer idOfMarket : typesOfMarketIdsInCustomer) {
+            Integer count = customerRepository.getCountOfCustomersByMarketId(idOfMarket);
+            if (numberOfCustomers == count) {
+                MarketIdsThatUserWants.add(idOfMarket);
+            }
+        }
+
+        List<Market> marketThatUserWasLookingFor = marketRepository.findAllById(MarketIdsThatUserWants);
+        return marketThatUserWasLookingFor;
+    }
+
+
 }

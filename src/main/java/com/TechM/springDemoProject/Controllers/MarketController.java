@@ -133,6 +133,14 @@ public class MarketController {
         Market market =marketService.getMarketCreatedDate(updatedDate);
         return market;
     }
+
+    @RequestMapping(value = "getMarketByNumberOfCustomers", method = RequestMethod.POST)
+    public List<Market> getMarkerByNumberOfCustomer(@RequestParam Integer numberOfCustomer) {
+        List<Market> MarketList=marketService.getMarketsByNumberOfCustomers(numberOfCustomer);
+        return MarketList;
+    }
+
+
 }
 
 
