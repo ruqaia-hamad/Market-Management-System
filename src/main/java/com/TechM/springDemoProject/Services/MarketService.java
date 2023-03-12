@@ -69,7 +69,6 @@ public class MarketService {
     }
 
 
-
     public void deleteAll() {
         marketRepository.deleteAll();
     }
@@ -83,8 +82,8 @@ public class MarketService {
 
     }
 
-    public void createNewMarket(String createdDate,String marketName, boolean isValid) throws ParseException {
-        Market market=new Market();
+    public void createNewMarket(String createdDate, String marketName, boolean isValid) throws ParseException {
+        Market market = new Market();
         DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date convetedDate = formatter.parse(createdDate);
         market.setCreatedDate(convetedDate);
@@ -95,20 +94,20 @@ public class MarketService {
 
 
     public void deleteMarketByID(Integer id) {
-        Market market=marketRepository.getMarketById(id);
+        Market market = marketRepository.getMarketById(id);
         market.setIsActive(false);
         marketRepository.save(market);
     }
 
     public void deleteMarketByName(String name) {
-        Market market=marketRepository.getMarketByName(name);
+        Market market = marketRepository.getMarketByName(name);
         market.setIsActive(false);
         marketRepository.save(market);
     }
 
     public void deleteAllItems() {
         Iterable<Market> markets = marketRepository.findAll();
-        for (Market market: markets) {
+        for (Market market : markets) {
             market.setIsActive(false);
 
         }
@@ -116,9 +115,9 @@ public class MarketService {
     }
 
 
-    public void deleteByCreatedDate(Date createdDate){
+    public void deleteByCreatedDate(Date createdDate) {
         Iterable<Market> markets = marketRepository.findByCreatedDate(createdDate);
-        for (Market market: markets) {
+        for (Market market : markets) {
             market.setIsActive(false);
 
         }
@@ -126,18 +125,19 @@ public class MarketService {
 
     }
 
-    public void deleteByUpdatedDate(Date updatedDate){
+    public void deleteByUpdatedDate(Date updatedDate) {
         Iterable<Market> markets = marketRepository.findByUpdatedDate(updatedDate);
-        for (Market market: markets) {
+        for (Market market : markets) {
             market.setIsActive(false);
 
         }
         marketRepository.saveAll(markets);
 
     }
+
     public void deleteByCreatedAfterDate(Date date) {
         Iterable<Market> markets = marketRepository.findByCreatedDateAfter(date);
-        for (Market market: markets) {
+        for (Market market : markets) {
             market.setIsActive(false);
 
         }
@@ -161,7 +161,7 @@ public class MarketService {
     }
 
 
-    public  Market getMarketCreatedDate(Date createdDate){
+    public Market getMarketCreatedDate(Date createdDate) {
         Market market = marketRepository.getMarketByCreatedDate(createdDate);
         return market;
     }
@@ -181,7 +181,4 @@ public class MarketService {
 
         List<Market> marketThatUserWasLookingFor = marketRepository.findAllById(MarketIdsThatUserWants);
         return marketThatUserWasLookingFor;
-    }
-
-
-}
+    }}
