@@ -27,7 +27,7 @@ public class CustomerService {
 
     public void addCustomer() {
         Customer customer = new Customer();
-        customer.setCustomerFirstName("Ahmed");
+        customer.setCustomerFirstName("Mona");
         customer.setCustomerSecondName("Hamed");
         customer.setContact("96473634");
         customerRepository.save(customer);

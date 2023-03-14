@@ -68,7 +68,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
 
     @Modifying
     @Transactional
-    @Query("DELETE FROM Customer c WHERE c.id = :id")
+    @Query("UPDATE Customer c SET c.isActive=0  WHERE c.id = :id")
     void deleteByIdIsActive(@Param("id") Integer id);
 
 

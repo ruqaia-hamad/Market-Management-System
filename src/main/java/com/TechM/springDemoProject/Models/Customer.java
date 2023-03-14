@@ -10,13 +10,13 @@ public class Customer extends  BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "First_Name")
+    @Column(name="First_name")
     private String customerFirstName;
 
-    @Column(name = "Second_Name")
+      @Column(name="Second_name")
     private String customerSecondName;
 
-    //  @Column(name="contact")
+      @Column(name="contact")
     private String contact;
 
     // @OneToMany
