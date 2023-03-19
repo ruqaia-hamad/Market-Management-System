@@ -5,6 +5,7 @@ import com.TechM.springDemoProject.Models.Item;
 import com.TechM.springDemoProject.RequestObject.InvoiceRequest;
 import com.TechM.springDemoProject.RequestObject.ItemRequest;
 import com.TechM.springDemoProject.Services.ItemService;
+import com.TechM.springDemoProject.Slack.SlackClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,10 +19,22 @@ public class ItemController {
 
     @Autowired
     ItemService itemService;
+    @Autowired
+    SlackClient slackClient;
 
-    @RequestMapping(value = "Item/getAll", method = RequestMethod.GET)
+    @RequestMapping(value = "getAll", method = RequestMethod.GET)
     public List<Item> getAllItems() {
         List<Item> items = itemService.getAllItems();
+        for (Item item : items) {
+            slackClient.sendMessage(String.format("Item name:"+ item.getName()));
+            slackClient.sendMessage(String.format("Item  Price:"+ item.getPrice()));
+            slackClient.sendMessage(String.format("Item  Is Active:"+ item.getIsActive()));
+            slackClient.sendMessage(String.format("Item Created Date::"+ item.getCreatedDate()));
+            slackClient.sendMessage(String.format("Item Updated Date:"+ item.getUpdatedDate()));
+            slackClient.sendMessage(String.format("-----------------------------------"));
+
+
+        }
         return items;
     }
 

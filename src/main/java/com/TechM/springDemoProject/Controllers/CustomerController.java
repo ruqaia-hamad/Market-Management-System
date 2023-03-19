@@ -29,7 +29,7 @@ public class CustomerController {
     SlackClient slackClient;
 
 
-    @RequestMapping(value = "Customer/getAll", method = RequestMethod.GET)
+    @RequestMapping(value = "getAll", method = RequestMethod.GET)
     public List<Customer> getAllCustomers() {
         List<Customer> customers = customerService.getAllCustomers();
         return customers;
@@ -217,9 +217,15 @@ public class CustomerController {
 
 
     @RequestMapping(value = "/customers", method = RequestMethod.POST)
-    public void createCustomer(@RequestBody CustomerRequestForCreateCustomer customerRequest) throws ParseException {
-        customerService.createCustomer(customerRequest.getFirstName(), customerRequest.getSecondName(), customerRequest.getContact(), customerRequest.getCreatedDate(), customerRequest.getIsActive(), customerRequest.getMarketId());
-
+    public String createCustomer(@RequestBody CustomerRequestForCreateCustomer customerRequest) throws ParseException {
+        try {
+            customerService.createCustomer(customerRequest.getFirstName(), customerRequest.getSecondName(), customerRequest.getContact(), customerRequest.getCreatedDate(), customerRequest.getIsActive(), customerRequest.getMarketId());
+            slackClient.sendMessage(" new customer  added Successfully ");
+            return " new customer  added Successfully ";
+        } catch (Exception e) {
+            slackClient.sendMessage(" adding new customer failed");
+            return "adding new customer failed";
+        }
 
     }
 

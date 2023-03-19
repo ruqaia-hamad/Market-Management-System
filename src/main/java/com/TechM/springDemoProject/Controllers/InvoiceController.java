@@ -5,7 +5,9 @@ import com.TechM.springDemoProject.Models.Invoice;
 import com.TechM.springDemoProject.RequestObject.CustomerRequestForCreateCustomer;
 import com.TechM.springDemoProject.RequestObject.InvoiceRequest;
 import com.TechM.springDemoProject.Services.InvoiceService;
+import com.TechM.springDemoProject.Slack.SlackClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
@@ -18,10 +20,20 @@ public class InvoiceController {
 
     @Autowired
     InvoiceService invoiceService;
-
-    @RequestMapping(value = "Invoice/getAll", method = RequestMethod.GET)
+    @Autowired
+    SlackClient slackClient;
+    @RequestMapping(value = "getAll", method = RequestMethod.GET)
     public List<Invoice> getAllInvoices() {
         List<Invoice> invoices = invoiceService.getAllInvoices();
+        for (Invoice invoice : invoices) {
+            slackClient.sendMessage(String.format("Invoice  ID:"+ invoice.getId()));
+            slackClient.sendMessage(String.format("Invoice  Email:"+ invoice.getEmail()));
+            slackClient.sendMessage(String.format("Invoice  FAX:"+ invoice.getFax()));
+            slackClient.sendMessage(String.format("Invoice  WEBSITE:"+ invoice.getWebsite()));
+            slackClient.sendMessage(String.format("-----------------------------------"));
+
+
+        }
         return invoices;
     }
 
@@ -29,6 +41,10 @@ public class InvoiceController {
     @RequestMapping(value = "Invoice/getById", method = RequestMethod.GET)
     public Invoice getInvoiceById(@RequestParam Integer invoiceId) {
         Invoice invoice = invoiceService.getInvoiceById(invoiceId);
+        slackClient.sendMessage(String.format("Invoice  ID:"+ invoice.getId()));
+        slackClient.sendMessage(String.format("Invoice  Email:"+ invoice.getEmail()));
+        slackClient.sendMessage(String.format("Invoice  FAX:"+ invoice.getFax()));
+        slackClient.sendMessage(String.format("Invoice  WEBSITE:"+ invoice.getWebsite()));
         return invoice;
     }
 
@@ -56,10 +72,20 @@ public class InvoiceController {
         invoiceService.addInvoice();
     }
 
-    @RequestMapping(value = "/getIsActive", method = RequestMethod.GET)
+    @RequestMapping(value = "getIsActive", method = RequestMethod.GET)
     public List<Invoice> getAllActiveInvoices() {
-        List<Invoice> invoces = invoiceService.getAllActiveInvoices();
-        return invoces;
+        List<Invoice> invoices = invoiceService.getAllActiveInvoices();
+        for (Invoice invoice : invoices) {
+            slackClient.sendMessage(String.format("Invoice  IS ACTIVE:"+ invoice.getIsActive()));
+            slackClient.sendMessage(String.format("Invoice  ID:"+ invoice.getId()));
+            slackClient.sendMessage(String.format("Invoice  Email:"+ invoice.getEmail()));
+            slackClient.sendMessage(String.format("Invoice  FAX:"+ invoice.getFax()));
+            slackClient.sendMessage(String.format("Invoice  WEBSITE:"+ invoice.getWebsite()));
+            slackClient.sendMessage(String.format("-----------------------------------"));
+
+
+        }
+        return invoices;
     }
 
     @RequestMapping(value = "/getInActive", method = RequestMethod.GET)
@@ -71,6 +97,13 @@ public class InvoiceController {
     @RequestMapping(value = "/getLatestRow", method = RequestMethod.GET)
     public Invoice findTopByOrderById() {
         Invoice invoice = invoiceService.findTopByOrderById();
+        slackClient.sendMessage(String.format("Invoice  IS ACTIVE:"+ invoice.getIsActive()));
+        slackClient.sendMessage(String.format("Invoice  ID:"+ invoice.getId()));
+        slackClient.sendMessage(String.format("Invoice  Email:"+ invoice.getEmail()));
+        slackClient.sendMessage(String.format("Invoice  FAX:"+ invoice.getFax()));
+        slackClient.sendMessage(String.format("Invoice  WEBSITE:"+ invoice.getWebsite()));
+        slackClient.sendMessage(String.format("-----------------------------------"));
+
         return invoice;
     }
 
@@ -113,22 +146,41 @@ public class InvoiceController {
 
     }
 
-    @RequestMapping(value="/deleteByUpdatedDate", method = RequestMethod.GET)
-    public void deleteByUpdatedDate(@RequestParam("updatedDate") Date updatedDate) {
-        invoiceService.deleteByUpdatedDate(updatedDate);
+    @RequestMapping(value="deleteByUpdatedDate", method = RequestMethod.GET)
+    public String deleteByUpdatedDate(@RequestParam("updatedDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date updatedDate) {
+
+        try {
+            invoiceService.deleteByUpdatedDate(updatedDate);
+            slackClient.sendMessage(String.format("Successfully deleted invoices Updated on %s", updatedDate.toString()));
+            return "Invoices deleted successfully";
+        } catch (Exception e) {
+            slackClient.sendMessage(String.format("Error deleting invoices Updated on %s: %s", updatedDate.toString(), e.getMessage()));
+            return "Error deleting invoices";
+        }
     }
 
     @RequestMapping(value="/deleteByCreatedDate", method = RequestMethod.GET)
-    public void deleteByCreatedDate(@RequestParam("createdDate") Date createdDate) {
-        invoiceService.deleteByCreatedDate(createdDate);
+    public String deleteByCreatedDate(@RequestParam("createdDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date createdDate) {
+        try {
+            invoiceService.deleteByCreatedDate(createdDate);
+            slackClient.sendMessage(String.format("Successfully deleted invoices created on %s", createdDate.toString()));
+            return "Invoices deleted successfully";
+        } catch (Exception e) {
+            slackClient.sendMessage(String.format("Error deleting invoices created on %s: %s", createdDate.toString(), e.getMessage()));
+            return "Error deleting invoices";
+        }
     }
+
     @RequestMapping(value="/deleteByCreatedAfterDate", method = RequestMethod.GET)
-    public void deleteByAfterCreatedDate(@RequestParam("date") Date date) {
+    public String deleteByAfterCreatedDate(@RequestParam("date") Date date) {
         invoiceService.deleteByCreatedAfterDate(date);
+        slackClient.sendMessage(String.format("Update invoices by created after  date %s", date.toString()));
+        return "Update invoices by created after  date";
+
     }
 
 
-    @RequestMapping(value = "/getByCreatedDate", method = RequestMethod.GET)
+    @RequestMapping(value = "/getByUpdatedDate", method = RequestMethod.GET)
     public Invoice getInvoiceByUpdatedDate(Date updatedDate){
         Invoice invoice = invoiceService.getInvoiceByUpdatedDate(updatedDate);
         return invoice;

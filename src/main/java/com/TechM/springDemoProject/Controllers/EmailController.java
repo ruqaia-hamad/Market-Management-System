@@ -1,5 +1,6 @@
 package com.TechM.springDemoProject.Controllers;
 
+import com.TechM.springDemoProject.Slack.SlackClient;
 import com.TechM.springDemoProject.mailing.models.EmailDetails;
 import com.TechM.springDemoProject.mailing.services.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,8 @@ public class EmailController {
     @Autowired
     EmailService emailService;
 
+    @Autowired
+    SlackClient slackClient;
 
     @PostMapping("/sendMail")
     public String sendMail(@RequestBody EmailDetails emailDetails) {
@@ -23,6 +26,7 @@ public class EmailController {
     @PostMapping("/sendMailToMany")
     public String sendMailToMany(@RequestBody EmailDetails emailDetails) {
         String status = emailService.sendSimpleMailToMany(emailDetails);
+        slackClient.sendMessage(String.format(status));
         return status;
     }
 

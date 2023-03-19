@@ -1,10 +1,12 @@
 package com.TechM.springDemoProject.Controllers;
 
+import com.TechM.springDemoProject.Models.Customer;
 import com.TechM.springDemoProject.Models.Item;
 import com.TechM.springDemoProject.Models.Market;
 import com.TechM.springDemoProject.RequestObject.CustomerRequestForCreateCustomer;
 import com.TechM.springDemoProject.RequestObject.MarketRequestForCreateDateUpdate;
 import com.TechM.springDemoProject.Services.MarketService;
+import com.TechM.springDemoProject.Slack.SlackClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.endpoint.invoke.ParameterMappingException;
 import org.springframework.web.bind.annotation.*;
@@ -19,15 +21,28 @@ public class MarketController {
     @Autowired
     MarketService marketService;
 
-    @RequestMapping(value = "Market/getAll", method = RequestMethod.GET)
+    @Autowired
+    SlackClient slackClient;
+    @RequestMapping(value = "getAll", method = RequestMethod.GET)
     public List<Market> getAllMarkets() {
         List<Market> markets = marketService.getAllMarkets();
+        for (Market market : markets) {
+
+            slackClient.sendMessage("Marker Name "+ market.getName());
+            slackClient.sendMessage("Marker ID "+ market.getId());
+            slackClient.sendMessage("Marker Created Date "+ market.getCreatedDate());
+            slackClient.sendMessage("Marker Updated Date "+ market.getUpdatedDate());
+        }
         return markets;
     }
 
-    @RequestMapping(value = "Market/getById", method = RequestMethod.GET)
+    @RequestMapping(value = "getById", method = RequestMethod.GET)
     public Market getMarketById(@RequestParam Integer marketId) {
         Market market = marketService.getMarketById(marketId);
+        slackClient.sendMessage("Marker Name "+ market.getName());
+        slackClient.sendMessage("Marker ID "+ market.getId());
+        slackClient.sendMessage("Marker Created Date "+ market.getCreatedDate().toString());
+        slackClient.sendMessage("Marker Updated Date "+ market.getUpdatedDate().toString());
         return market;
     }
 
