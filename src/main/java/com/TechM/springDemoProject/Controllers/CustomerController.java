@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
@@ -34,6 +35,8 @@ public class CustomerController {
         List<Customer> customers = customerService.getAllCustomers();
         return customers;
     }
+
+
 
     @RequestMapping(value = "getById", method = RequestMethod.GET)
     public Customer getCustomerById(@RequestParam Integer customerId) {

@@ -7,6 +7,7 @@ import com.TechM.springDemoProject.RequestObject.ItemRequest;
 import com.TechM.springDemoProject.Services.ItemService;
 import com.TechM.springDemoProject.Slack.SlackClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
@@ -23,6 +24,7 @@ public class ItemController {
     SlackClient slackClient;
 
     @RequestMapping(value = "getAll", method = RequestMethod.GET)
+    @Scheduled(cron="0 1 * * * *")
     public List<Item> getAllItems() {
         List<Item> items = itemService.getAllItems();
         for (Item item : items) {
