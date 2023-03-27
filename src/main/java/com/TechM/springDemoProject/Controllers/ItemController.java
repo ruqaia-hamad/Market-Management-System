@@ -8,6 +8,7 @@ import com.TechM.springDemoProject.Services.ItemService;
 import com.TechM.springDemoProject.Slack.SlackClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
@@ -16,6 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "Item")
+@Component
 public class ItemController {
 
     @Autowired
@@ -24,7 +26,6 @@ public class ItemController {
     SlackClient slackClient;
 
     @RequestMapping(value = "getAll", method = RequestMethod.GET)
-    @Scheduled(cron="0 1 * * * *")
     public List<Item> getAllItems() {
         List<Item> items = itemService.getAllItems();
         for (Item item : items) {
@@ -41,13 +42,13 @@ public class ItemController {
     }
 
 
-    @RequestMapping(value = "Item/getById", method = RequestMethod.GET)
+    @RequestMapping(value = "getById", method = RequestMethod.GET)
     public Item getItemById(@RequestParam Integer itemId) {
         Item item = itemService.getItemById(itemId);
         return item;
     }
 
-    @RequestMapping(value = "Item/getByPrice", method = RequestMethod.GET)
+    @RequestMapping(value = "getByPrice", method = RequestMethod.GET)
     public Item getItemByPrice(@RequestParam Integer price) {
         Item item = itemService.getItemByPrice(price);
         return item;
@@ -140,5 +141,6 @@ public class ItemController {
         Item item = itemService.getItemByUpdatedDateDate(updatedDate);
         return item;
     }
+
 
 }

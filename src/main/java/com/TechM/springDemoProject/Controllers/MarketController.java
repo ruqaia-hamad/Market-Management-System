@@ -27,7 +27,6 @@ public class MarketController {
     public List<Market> getAllMarkets() {
         List<Market> markets = marketService.getAllMarkets();
         for (Market market : markets) {
-
             slackClient.sendMessage("Marker Name "+ market.getName());
             slackClient.sendMessage("Marker ID "+ market.getId());
             slackClient.sendMessage("Marker Created Date "+ market.getCreatedDate());

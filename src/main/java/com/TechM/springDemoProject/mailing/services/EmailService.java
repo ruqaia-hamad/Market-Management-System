@@ -37,7 +37,6 @@ public class EmailService  implements EmailRepository {
                 mailMessage.setText(emailDetails.getMsgBody());
                 mailMessage.setSubject(emailDetails.getSubject());
 
-                // Sending the mail
                 mailSender.send(mailMessage);
             }
 
