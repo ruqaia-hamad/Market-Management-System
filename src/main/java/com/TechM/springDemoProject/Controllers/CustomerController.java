@@ -41,15 +41,19 @@ public class CustomerController {
     @RequestMapping(value = "getById", method = RequestMethod.GET)
     public Customer getCustomerById(@RequestParam Integer customerId) {
         Customer customer = customerService.getCustomerById(customerId);
-        Integer customerID= customer.getId();
-        String firstName=customer.getCustomerFirstName();
-        String secondName=customer.getCustomerSecondName();
-        String contact=customer.getContact();
+        if (customer == null) {
+            return null;
+        }
+        Integer customerID = customer.getId();
+        String firstName = customer.getCustomerFirstName();
+        String secondName = customer.getCustomerSecondName();
+        String contact = customer.getContact();
         Date createdDate = customer.getCreatedDate();
         Date updatedDate = customer.getUpdatedDate();
         boolean isActive = customer.getIsActive();
-        slackClient.sendMessage(String.format("Customer details : customerId=%s , firstName=%s , secondName=%s ,contact=%s ,createdDate=%s , updatedDate=%s , isActive=%s",customerID,firstName,secondName,contact, createdDate, updatedDate, isActive));
+        slackClient.sendMessage(String.format("Customer details : customerId=%s , firstName=%s , secondName=%s ,contact=%s ,createdDate=%s , updatedDate=%s , isActive=%s", customerID, firstName, secondName, contact, createdDate, updatedDate, isActive));
         return customer;
+
     }
 
     @RequestMapping(value = "getByFirstName", method = RequestMethod.GET)
@@ -99,10 +103,15 @@ public class CustomerController {
     }
 
     @GetMapping(value = "deleteCustomerByMarketId")
-    public String deleteCustomerByMarketId(@RequestParam Integer id) {
+    public String setIsActiveFalseByMarketId(@RequestParam Integer id) {
         customerService.deleteCustomerByMarketId(id);
-        slackClient.sendMessage("Customer record with Market_ID " + id + " has been deleted.");
-          return "Recored delete";
+        if (customerService != null) {
+            customerService.deleteCustomerByMarketId(id);
+            slackClient.sendMessage("Customer record with Market_ID " + id + " has been updated.");
+            return "Record updated";
+        } else {
+            return "Customer service is not available.";
+        }
     }
 
 
