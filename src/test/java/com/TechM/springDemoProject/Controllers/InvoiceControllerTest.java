@@ -22,12 +22,37 @@ class InvoiceControllerTest {
         assertEquals("ahmed@gmail.com", email);
     }
 
+    @Test
+    void getInvoiceById2() {
+        String email = invoiceController.getInvoiceById(2).getEmail();
+        assertEquals("muna@gmail.com", email);
+    }
+
+    @Test
+    void getInvoiceByWebsite() {
+        String email = invoiceController.getInvoiceById(2).getWebsite();
+        assertEquals("www.muna.com", email);
+    }
+
+    @Test
+    void getInvoiceByWebsite2() {
+        String email = invoiceController.getInvoiceById(1).getWebsite();
+        assertEquals("www.oman.com", email);
+    }
+
 
     @Test
     void getInvoiceByIdReturnsInvoiceWithCorrectId() throws Exception {
         Invoice invoice = invoiceController.getInvoiceById(1);
         assertNotNull(invoice);
         assertEquals(1, invoice.getId());
+    }
+
+    @Test
+    void getInvoiceByIdReturnsInvoiceWithCorrectId1() throws Exception {
+        Invoice invoice = invoiceController.getInvoiceById(2);
+        assertNotNull(invoice);
+        assertEquals(2, invoice.getId());
     }
 
     @Test

@@ -26,6 +26,12 @@ class ItemControllerTest {
     }
 
     @Test
+    void getItemById2() throws Exception {
+        String itemName = itemController.getItemById(2).getName();
+        assertEquals("orange", itemName);
+    }
+
+    @Test
     void getItemByIdThrowsErrorOrInvalidId() throws Exception {
         assertThrows(Exception.class, (Executable) itemController.getItemById(0));
     }
@@ -35,6 +41,18 @@ class ItemControllerTest {
     void getItemByIdReturnsNullForNonexistentId() throws Exception {
         assertNull(itemController.getItemById(100));
     }
+    @Test
+    void getItemByIdReturnsNullForNonexistentId2() throws Exception {
+        assertNull(itemController.getItemById(90));
+    }    @Test
+    void getItemByIdReturnsNullForNonexistentId3() throws Exception {
+        assertNull(itemController.getItemById(95));
+    }
+    @Test
+    void getItemByIdReturnsNullForNonexistentId4() throws Exception {
+        assertNull(itemController.getItemById(17));
+    }
+
 
 
     @Test
@@ -44,6 +62,13 @@ class ItemControllerTest {
         assertEquals(1, item.getId());
     }
 
+
+    @Test
+    void getItemByIdReturnsItemWithCorrectId2() throws Exception {
+        Item item = itemController.getItemById(2);
+        assertNotNull(item);
+        assertEquals(2, item.getId());
+    }
     @Test
     void getAllItems() throws Exception {
         List<Item> items = itemController.getAllItems();
