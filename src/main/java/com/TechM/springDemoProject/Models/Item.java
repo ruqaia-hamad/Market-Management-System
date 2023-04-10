@@ -24,6 +24,15 @@ public class Item  extends BaseEntity{
     }
 
     Integer price;
+    Integer quantity;
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
 
     public Integer getId() {
         return id;

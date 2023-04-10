@@ -2,6 +2,7 @@ package com.TechM.springDemoProject.Controllers;
 
 import com.TechM.springDemoProject.Models.Customer;
 import com.TechM.springDemoProject.Models.Market;
+import com.TechM.springDemoProject.Services.MarketService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,6 +16,9 @@ import static org.junit.jupiter.api.Assertions.*;
 class MarketControllerTest {
 @Autowired
 MarketController marketController;
+
+@Autowired
+    MarketService marketService;
     @Test
     void getAllMarkets() {
             List<Market> markets = marketController.getAllMarkets();
@@ -44,6 +48,12 @@ MarketController marketController;
         String marketName = marketController.getMarketById(2).getName();
         assertEquals("LULO HYPERMARKET", marketName);
     }
+
+    @Test
+    void getMarketById4() {
+        String marketName = marketController.getMarketById(5).getName();
+        assertEquals("Carrfour", marketName);
+    }
     @Test
     void getAllActiveMarkets() {
         List<Market> markets = marketController.getAllMarkets();
@@ -51,5 +61,6 @@ MarketController marketController;
             assertFalse(markets.isEmpty());
         }
     }
+
 
 }

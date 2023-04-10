@@ -1,5 +1,6 @@
 package com.TechM.springDemoProject.Controllers;
 
+import com.TechM.springDemoProject.Controllers.DTO.MarketCustomerDTO;
 import com.TechM.springDemoProject.Models.Customer;
 import com.TechM.springDemoProject.Services.CustomerService;
 import com.TechM.springDemoProject.Services.InvoiceService;
@@ -17,8 +18,8 @@ import java.util.List;
 
 public class Controller {
 
-    @Autowired
-    CustomerService customerService;
+//    @Autowired
+//    CustomerService customerService;
     @Autowired
     MarketService marketService;
 
@@ -34,31 +35,9 @@ public class Controller {
 
     //creating API
 
-    @RequestMapping(value = "getByMarket", method = RequestMethod.GET)
-    public List<Customer> getCustomerByMarketId1(@RequestParam Integer Market_Id) {
-        List<Customer> customers = customerService.getCustomerByMarketId1(Market_Id);
-        for (Customer customer : customers) {
-            Integer customerId=customer.getId();
-            String firstName=customer.getCustomerFirstName();
-            String secondName=customer.getCustomerSecondName();
-            String contact=customer.getContact();
-            Date createdDate = customer.getCreatedDate();
-            Date updatedDate = customer.getUpdatedDate();
-            boolean isActive = customer.getIsActive();
-            slackClient.sendMessage(String.format("Customer details : customerId=%s , firstName=%s , secondName=%s ,contact=%s ,createdDate=%s , updatedDate=%s , isActive=%s",customerId,firstName,secondName,contact, createdDate, updatedDate, isActive));
-        }
-
-        return customers;
-
-    }
-
-    @RequestMapping(value = "Customer/getByMarketId", method = RequestMethod.GET)
-    public List<CustomerMarketDTO> getCustomerByMarketId(@RequestParam Integer Market_Id) {
-        List<CustomerMarketDTO> customers = customerService.getCustomerByMarketId(Market_Id);
-        return customers;
 
 
-    }
+
 
 
     @GetMapping

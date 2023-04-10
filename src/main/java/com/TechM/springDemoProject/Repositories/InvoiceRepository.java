@@ -70,6 +70,7 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Integer> {
     @Query(value = "SELECT i FROM Invoice i where i.updatedDate= :updatedDate")
     Invoice getInvoiceByUpdatedDate(@Param("updatedDate") Date updatedDate);
 
+    List<Invoice> findByCustomerMarketId(Integer marketId);
 
 }
 

@@ -6,11 +6,14 @@ import com.TechM.springDemoProject.Models.Market;
 import com.TechM.springDemoProject.RequestObject.CustomerRequestForCreateCustomer;
 import com.TechM.springDemoProject.RequestObject.MarketRequestForCreateDateUpdate;
 import com.TechM.springDemoProject.Services.MarketService;
+import com.TechM.springDemoProject.Services.ReportService;
 import com.TechM.springDemoProject.Slack.SlackClient;
+import net.sf.jasperreports.engine.JRException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.endpoint.invoke.ParameterMappingException;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.FileNotFoundException;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
@@ -20,6 +23,9 @@ import java.util.List;
 public class MarketController {
     @Autowired
     MarketService marketService;
+
+    @Autowired
+    ReportService reportService;
 
     @Autowired
     SlackClient slackClient;
@@ -153,6 +159,7 @@ public class MarketController {
         List<Market> MarketList=marketService.getMarketsByNumberOfCustomers(numberOfCustomer);
         return MarketList;
     }
+
 
 
 }

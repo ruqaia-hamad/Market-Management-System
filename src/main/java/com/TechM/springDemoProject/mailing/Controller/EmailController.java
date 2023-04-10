@@ -1,4 +1,4 @@
-package com.TechM.springDemoProject.Controllers;
+package com.TechM.springDemoProject.mailing.Controller;
 
 import com.TechM.springDemoProject.Slack.SlackClient;
 import com.TechM.springDemoProject.mailing.models.EmailDetails;

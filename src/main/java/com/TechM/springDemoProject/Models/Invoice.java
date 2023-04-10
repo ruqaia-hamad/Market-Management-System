@@ -16,6 +16,29 @@ public class Invoice extends BaseEntity {
 
     String website;
 
+    private Double totalPrice;
+
+    public Double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(Double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+
+    @OneToMany
+    private List<Item> items;
+
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
+    }
+
+
     @OneToOne
     @JoinColumn(name = "customer_Id", referencedColumnName = "id")
     Customer customer;

@@ -2,6 +2,7 @@ package com.TechM.springDemoProject.Services;
 
 import com.TechM.springDemoProject.Models.Customer;
 import com.TechM.springDemoProject.Models.Invoice;
+import com.TechM.springDemoProject.Models.Item;
 import com.TechM.springDemoProject.Models.Market;
 import com.TechM.springDemoProject.Repositories.CustomerRepository;
 import com.TechM.springDemoProject.Repositories.InvoiceRepository;
@@ -172,5 +173,19 @@ public class InvoiceService {
      Invoice invoice=invoiceRepository.getInvoiceByUpdatedDate(updatedDate);
      return  invoice;
     }
+
+
+    public void calculateAndSaveTotalPrice(Integer invoiceId) {
+        Invoice invoice = invoiceRepository.getInvoiceById(invoiceId);
+
+        double totalPrice = 0;
+        for (Item item : invoice.getItems()) {
+            totalPrice += item.getPrice();
+        }
+
+        invoice.setTotalPrice(totalPrice);
+        invoiceRepository.save(invoice);
+    }
+
 }
 

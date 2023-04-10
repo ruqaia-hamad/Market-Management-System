@@ -1,9 +1,12 @@
 package com.TechM.springDemoProject.Repositories;
 
+import com.TechM.springDemoProject.Controllers.DTO.CustomerPerformanceDTO;
+import com.TechM.springDemoProject.Controllers.DTO.MarketCustomerDTO;
 import com.TechM.springDemoProject.Models.Customer;
 
 import com.TechM.springDemoProject.Controllers.CustomerMarketDTO;
 import com.TechM.springDemoProject.Models.Item;
+import com.TechM.springDemoProject.Models.Market;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -21,8 +24,9 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
 
 
     @Query(value = "SELECT c FROM Customer c WHERE c.updatedDate = :updatedDate")
-    Iterable<Customer> findByUpdatedDate(@Param("updatedDate")Date updatedDate);
-    Iterable<Customer> findByCreatedDate(@Param("createdDate")Date createdDate);
+    Iterable<Customer> findByUpdatedDate(@Param("updatedDate") Date updatedDate);
+
+    Iterable<Customer> findByCreatedDate(@Param("createdDate") Date createdDate);
 
     Iterable<Customer> findByCreatedDateAfter(Date date);
 
@@ -45,8 +49,8 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
     @Query(value = "SELECT c FROM Customer c WHERE c.market.id = :Market_Id")
     List<Customer> findByMarketId(@Param("Market_Id") Integer Market_Id);
 
-    @Query(value = "SELECT new  com.TechM.springDemoProject.Controllers.CustomerMarketDTO(c.customerFirstName, c.customerSecondName, m.name) " + "FROM Customer c " + "JOIN c.market m " + "WHERE m.id = :Market_Id")
-    List<CustomerMarketDTO> findCustomerByMarketId(@Param("Market_Id") Integer Market_Id);
+//    @Query(value = "SELECT new  com.TechM.springDemoProject.Controllers.DTO.MarketCustomerDTO(c.customer_Id , c.customerFirstName, c.customerSecondName, m.name) " + "FROM Customer c " + "JOIN c.market m " + "WHERE m.id = :Market_Id")
+//    List<MarketCustomerDTO> findCustomerByMarketId(@Param("Market_Id") Integer Market_Id);
 
 
     @Query("SELECT c FROM Customer c WHERE c.isActive = true")
@@ -56,11 +60,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
     List<Customer> findAllInActive();
 
 
-
-
-
     @Query("SELECT c FROM Customer c WHERE c.id = (SELECT MAX(c.id) FROM Customer c)")
-
     Customer findTopByOrderById();
 
     @Query("SELECT c FROM Customer c ORDER BY c.updatedDate DESC")
@@ -83,7 +83,6 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
     void deleteAll();
 
 
-
     @Query(value = "SELECT c FROM Customer c where c.createdDate= :createdDate")
     Customer getCustomerByCreatedDate(@Param("createdDate") Date createdDate);
 
@@ -92,13 +91,27 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
     Customer getCustomerByUpdatedDate(@Param("updatedDate") Date updatedDate);
 
 
-
     @Query(value = "SELECT DISTINCT market_Id FROM customer", nativeQuery = true)
     List<Integer> getDistinctMarketIdsFromCustomer();
 
     @Query(value = "SELECT COUNT(id) From customer where market_Id = ?1", nativeQuery = true)
     Integer getCountOfCustomersByMarketId(Integer market_Id);
-}
 
+
+    @Query(value = "SELECT c.first_name AS customerFirstName, c.contact, SUM(i.total_price) AS totalRevenue \n" +
+            "       FROM customer c LEFT JOIN invoice i ON c.id = i.customer_id \n" +
+            "        WHERE c.is_active =1\n" +
+            "        GROUP BY c.first_name, c.contact", nativeQuery = true)
+    List<Customer> findAllCustomersWithTotalRevenue();
+
+    List<Customer> findByMarket(Market market);
+
+
+
+    @Query(value = "SELECT i FROM Customer i WHERE i.market.id = :market_Id")
+    List<Customer> findByInvoiceId(@Param("market_Id") Integer id);
+
+
+}
 
 

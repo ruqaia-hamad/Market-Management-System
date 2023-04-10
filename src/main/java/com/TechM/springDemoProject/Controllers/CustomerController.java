@@ -1,12 +1,15 @@
 package com.TechM.springDemoProject.Controllers;
 
+import com.TechM.springDemoProject.Controllers.DTO.MarketCustomerDTO;
 import com.TechM.springDemoProject.Models.Customer;
 import com.TechM.springDemoProject.Models.Item;
 import com.TechM.springDemoProject.Repositories.CustomerRepository;
 import com.TechM.springDemoProject.RequestObject.CustomerRequest;
 import com.TechM.springDemoProject.RequestObject.CustomerRequestForCreateCustomer;
 import com.TechM.springDemoProject.Services.CustomerService;
+import com.TechM.springDemoProject.Services.ReportService;
 import com.TechM.springDemoProject.Slack.SlackClient;
+import net.sf.jasperreports.engine.JRException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -14,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.FileNotFoundException;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.Date;
@@ -22,7 +26,8 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "Customer")
 public class CustomerController {
-
+@Autowired
+    ReportService reportService;
 
     @Autowired
     CustomerService customerService;
@@ -256,6 +261,40 @@ public class CustomerController {
     public void deleteByAfterCreatedDate(@RequestParam("date") Date date) {
         customerService.deleteByCreatedAfterDate(date);
     }
+
+    @RequestMapping(value = "customersReport", method = RequestMethod.GET)
+    public String generateMarketsReport() throws FileNotFoundException, JRException {
+
+        return reportService.generateReportForCustomers();
+    }
+
+//    @RequestMapping(value = "getByMarketId", method = RequestMethod.GET)
+//    public List<MarketCustomerDTO> getCustomerByMarketId(@RequestParam Integer Market_Id) {
+//        List<MarketCustomerDTO> customers = customerService.getCustomerByMarketId(Market_Id);
+//        return customers;
+//
+//
+//    }
+
+    @RequestMapping(value = "getByMarket", method = RequestMethod.GET)
+    public List<Customer> getCustomerByMarketId1(@RequestParam Integer Market_Id) {
+        List<Customer> customers = customerService.getCustomerByMarketId1(Market_Id);
+//        for (Customer customer : customers) {
+//            Integer customerId=customer.getId();
+//            String firstName=customer.getCustomerFirstName();
+//            String secondName=customer.getCustomerSecondName();
+//            String contact=customer.getContact();
+//            Date createdDate = customer.getCreatedDate();
+//            Date updatedDate = customer.getUpdatedDate();
+//            boolean isActive = customer.getIsActive();
+//            slackClient.sendMessage(String.format("Customer details : customerId=%s , firstName=%s , secondName=%s ,contact=%s ,createdDate=%s , updatedDate=%s , isActive=%s",customerId,firstName,secondName,contact, createdDate, updatedDate, isActive));
+//        }
+
+        return customers;
+
+    }
+
+
 
 }
 

@@ -5,11 +5,15 @@ import com.TechM.springDemoProject.Models.Invoice;
 import com.TechM.springDemoProject.RequestObject.CustomerRequestForCreateCustomer;
 import com.TechM.springDemoProject.RequestObject.InvoiceRequest;
 import com.TechM.springDemoProject.Services.InvoiceService;
+import com.TechM.springDemoProject.Services.ReportService;
 import com.TechM.springDemoProject.Slack.SlackClient;
+import net.sf.jasperreports.engine.JRException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.FileNotFoundException;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
@@ -18,6 +22,9 @@ import java.util.List;
 @RequestMapping(value = "Invoice")
 public class InvoiceController {
 
+
+    @Autowired
+    ReportService reportService;
     @Autowired
     InvoiceService invoiceService;
     @Autowired
@@ -185,6 +192,5 @@ public class InvoiceController {
         Invoice invoice = invoiceService.getInvoiceByUpdatedDate(updatedDate);
         return invoice;
     }
-
 
 }

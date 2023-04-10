@@ -1,5 +1,6 @@
 package com.TechM.springDemoProject.Services;
 
+import com.TechM.springDemoProject.Controllers.DTO.MarketCustomerDTO;
 import com.TechM.springDemoProject.Models.Customer;
 import com.TechM.springDemoProject.Controllers.CustomerMarketDTO;
 import com.TechM.springDemoProject.Models.Market;
@@ -76,10 +77,10 @@ public class CustomerService {
         return customer;
     }
 
-    public List<CustomerMarketDTO> getCustomerByMarketId(Integer Market_Id) {
-        List<CustomerMarketDTO> customers = customerRepository.findCustomerByMarketId(Market_Id);
-        return customers;
-    }
+//    public List<MarketCustomerDTO> getCustomerByMarketId(Integer Market_Id) {
+//        List<MarketCustomerDTO> customers = customerRepository.findCustomerByMarketId(Market_Id);
+//        return customers;
+//    }
 
 
     public List<Customer> getAllActiveCustomers() {

@@ -1,5 +1,6 @@
 package com.TechM.springDemoProject.Repositories;
 
+import com.TechM.springDemoProject.Controllers.DTO.ItemDistributionDTO;
 import com.TechM.springDemoProject.Models.Customer;
 import com.TechM.springDemoProject.Models.Invoice;
 import com.TechM.springDemoProject.Models.Item;
@@ -71,7 +72,16 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
     @Query(value = "SELECT i FROM Item i where i.updatedDate= :updatedDate")
     Item getItemByUpdatedDate(@Param("updatedDate") Date updatedDate);
 
+    @Query(value = "SELECT i.fax, i.id , i.email , i.website , s.item_description from invoice i INNER JOIN item s ON s.invoice_id = s.id;", nativeQuery = true)
+    List<Object[]> InvoicesWithItem();
+
+
+        @Query("SELECT NEW com.TechM.springDemoProject.Controllers.DTO.ItemDistributionDTO(i.name, SUM(i.quantity)) " +
+                "FROM Item i " +
+                "GROUP BY i.name")
+        List<ItemDistributionDTO> findItemDistribution();
+    }
 
 
 
-}
+

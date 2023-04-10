@@ -1,16 +1,17 @@
 package com.TechM.springDemoProject.Controllers;
 
-import com.TechM.springDemoProject.Models.Invoice;
 import com.TechM.springDemoProject.Models.Item;
-import com.TechM.springDemoProject.RequestObject.InvoiceRequest;
+import com.TechM.springDemoProject.RequestObject.ItemInvoiceDTO;
 import com.TechM.springDemoProject.RequestObject.ItemRequest;
 import com.TechM.springDemoProject.Services.ItemService;
+import com.TechM.springDemoProject.Services.ReportService;
 import com.TechM.springDemoProject.Slack.SlackClient;
+import net.sf.jasperreports.engine.JRException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.FileNotFoundException;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
@@ -24,6 +25,9 @@ public class ItemController {
     ItemService itemService;
     @Autowired
     SlackClient slackClient;
+
+    @Autowired
+    ReportService reportService;
 
     @RequestMapping(value = "getAll", method = RequestMethod.GET)
     public List<Item> getAllItems() {
