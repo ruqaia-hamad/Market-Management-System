@@ -105,6 +105,11 @@ public class ReportService {
                 List<Invoice> customerInvoices = invoiceRepository.findByCustomerId(customer.getId());
                 invoices.addAll(customerInvoices);
             }
+            //invoices is a collection of Invoice objects.
+            //stream() method is called on the invoices collection to create a stream of Invoice objects.
+            //mapToDouble() method is called on the stream to map each Invoice object to its total price, which is a double value.
+            // The Invoice::getTotalPrice method reference is used as the mapping function to extract the total price of each invoice.
+            //sum() method is called on the resulting stream of double values to compute the total revenue by adding up all the prices.
             double totalRevenue = invoices.stream()
                     .mapToDouble(Invoice::getTotalPrice)
                     .sum();
@@ -133,7 +138,10 @@ public class ReportService {
 
         for (Invoice invoice : invoices) {
             List<Item> items = itemRepository.findByInvoiceId(invoice.getId());
-
+            // streamed using the stream() methoed
+            //  max returns the maximum items
+            //Comparator which compares items based on their quantity field.
+            //orElseThrow() ---return exception if the list empty
             if (!items.isEmpty()) {
                 Item topSellingItem = items.stream()
                         .max(Comparator.comparingInt(Item::getQuantity))
@@ -214,6 +222,7 @@ public class ReportService {
         for (Market market : markets) {
             List<Customer> customers = customerRepository.findByMarket(market);
             double totalRevenue = 0;
+            // call the getTotalPrice() to retrive total price of all item , then add it to total revenue.
 
             for (Customer customer : customers) {
                 List<Invoice> invoices = invoiceRepository.findByCustomerId(customer.getId());
@@ -242,13 +251,23 @@ public class ReportService {
     public String generateReportForCustomersReport() throws FileNotFoundException, JRException {
         List<Customer> customers = customerRepository.findAll();
         List<CustomerReportDTO> customerReports = new ArrayList<>();
+
         for (Customer customer : customers) {
             List<Invoice> invoices = invoiceRepository.findByCustomerId(customer.getId());
             int totalInvoices = invoices.size();
-            int totalItemsSold = invoices.stream()
-                    .flatMap(invoice -> invoice.getItems().stream())
-                    .mapToInt(Item::getQuantity)
-                    .sum();
+            int totalItemsSold = 0;
+          //retrieves the list of Item objects from Invoice
+            for (Invoice invoice : invoices) {
+                List<Item> items = invoice.getItems();
+                int itemsSoldInInvoice = 0;
+
+                for (Item item : items) {
+                    //add the quantity item to the itemsSoldInInvoice
+                    itemsSoldInInvoice += item.getQuantity();
+                }
+           //added to totalItemsSold
+                totalItemsSold += itemsSoldInInvoice;
+            }
 
             CustomerReportDTO customerReport = new CustomerReportDTO();
             customerReport.setName(customer.getCustomerFirstName() + " " + customer.getCustomerSecondName());
@@ -257,6 +276,7 @@ public class ReportService {
             customerReport.setTotalItemsSold(totalItemsSold);
             customerReports.add(customerReport);
         }
+
 
         File file = new File("C:\\Users\\user015\\Downloads\\springDemoProject\\springDemoProject\\src\\main\\resources\\MarketCustomers_Report.jrxml");
         JasperReport jasperReport = JasperCompileManager.compileReport(file.getAbsolutePath());
